@@ -1,0 +1,87 @@
+/* Variables */
+:root{
+    --borderColor: #38393c;
+}
+
+body{
+    background-color: black;
+    color: white;
+    font-family: helveticaNeueMedium;
+}
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.blurBack{
+    height: 100vh;
+    width: 100vw;
+    z-index: 11;
+    position: fixed;
+    background-color: rgba(43, 53, 61, 0.53);
+}
+
+
+@font-face {
+    font-family: helveticaNeueMedium;
+    src: url('./Font/HelveticaNeueMedium.ttf');
+}
+
+@font-face {
+    font-family: helveticaNeueThin;
+    src: url('./Font/HelveticaNeueUltraLight.ttf');
+}
+
+.first{
+    flex-basis: 33%;
+    flex-grow: 1;
+    flex-shrink: 100;
+    display: flex;
+    justify-content: end;
+}
+
+.second{
+    flex-basis: 66%;
+    flex-grow: 2;
+    flex-shrink: 1;
+}
+
+
+.navbarText{
+    color: white;
+}
+
+.main-container{
+    display: flex;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 1250px) {
+    .first{
+        flex-basis: 1%;
+        flex-grow: 1;
+        flex-shrink: 210;
+    }
+
+    .navbarText{
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 973px){
+    .first{
+        flex-basis: 10%;
+        flex-shrink: 30;
+    }
+    .second{
+        flex-basis: 700px;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .first{
+        display: none;
+    }
+}

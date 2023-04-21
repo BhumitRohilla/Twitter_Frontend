@@ -1,0 +1,12 @@
+.mainContainer{
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid var(--borderColor);
+    width: 100%;
+}
+
+.mainContainer p{
+    color: gray;
+}
+

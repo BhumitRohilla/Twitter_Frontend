@@ -1,0 +1,45 @@
+.mainBody{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    max-width: 275px;
+    flex-basis: 275px;
+}
+.svg{
+    width: 30px;
+    height: 30px;
+}
+
+.explore{
+    display: flex;
+    align-items: center;
+}
+
+.setting{
+    display: flex;
+    align-items: center;
+}
+
+.navitem{
+    margin: 5px;
+    padding: 10px;
+}
+
+.navitemContainer{
+    max-width: 275px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+@media only screen and (max-width: 1240px){
+    .navitemContainer{
+        max-width: 68px;
+        box-sizing: border-box;
+    }
+    .navitem{
+        margin: 0px;
+        padding: 5px;
+    }
+}
