@@ -7,7 +7,8 @@ import styles from './index.module.css'
 
 export default function Navbar(){
     let {user} = useContext(AuthContext);
-    if(user.userName === undefined){
+    console.log(user);
+    if(user.username === undefined){
         return (
             <>
                 <div className='main-container'>
@@ -26,7 +27,7 @@ export default function Navbar(){
             <>
                 <div className='main-container'>
                     <div className='first'>
-                        <SideBar />
+                        <SideBar userName={user.username} />
                     </div>
                     <div className= 'second'>
                         <Outlet />

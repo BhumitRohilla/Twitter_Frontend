@@ -1,6 +1,7 @@
 /* Variables */
 :root{
     --borderColor: #38393c;
+    --blueColor  : #1d9bf0;
 }
 
 body{
@@ -30,7 +31,7 @@ body{
 
 @font-face {
     font-family: helveticaNeueThin;
-    src: url('./Font/HelveticaNeueUltraLight.ttf');
+    src: url('./Font/HelveticaNeueLight.ttf');
 }
 
 .first{
@@ -43,8 +44,9 @@ body{
 
 .second{
     flex-basis: 66%;
-    flex-grow: 2;
+    flex-grow: 1;
     flex-shrink: 1;
+    min-width: 1000px;
 }
 
 
@@ -59,15 +61,19 @@ body{
 
 @media only screen and (max-width: 1250px) {
     .first{
-        flex-basis: 1%;
+        flex-basis: 80px;
         flex-grow: 1;
-        flex-shrink: 210;
+        flex-shrink: 400;
     }
 
     .navbarText{
         display: none;
     }
 
+    .second{
+        flex-basis: 980px;
+        min-width: 0px;
+    }
 }
 
 @media only screen and (max-width: 973px){
@@ -83,5 +89,13 @@ body{
 @media only screen and (max-width: 500px){
     .first{
         display: none;
+    }
+    .second{
+        width: 100%;
+    }
+    /* TODO: If border in twitter not showing change this */
+    .second > div{
+        border: none;
+        /* background-color: red; */
     }
 }

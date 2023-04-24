@@ -7,8 +7,7 @@ function Input({type,placeHolder,onChange,value,label}) {
     function changevalue(ev){
         onChange(ev.target.value);
     }
-
-
+    
     let inputRef = useRef(null);
 
     function inputFocus(){

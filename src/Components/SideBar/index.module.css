@@ -24,6 +24,11 @@
     margin: 5px;
     padding: 10px;
 }
+.navitem:hover{
+    background-color: rgb(53, 52, 52);
+    border-radius: 50px;
+}
+
 
 .navitemContainer{
     max-width: 275px;
@@ -31,15 +36,22 @@
     padding: 10px;
     box-sizing: border-box;
     height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-@media only screen and (max-width: 1240px){
+
+@media only screen and (max-width: 1250px){
     .navitemContainer{
-        max-width: 68px;
-        box-sizing: border-box;
+        width: 80px;
+        margin-left: auto;
     }
-    .navitem{
-        margin: 0px;
-        padding: 5px;
+    .mainBody{
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        max-width: 275px;
+        flex-basis: 80px;
+
     }
 }

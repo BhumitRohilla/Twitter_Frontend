@@ -2,7 +2,7 @@ import React from "react";
 import Styles from './index.module.css'
 import TwitterIcon from '../../assets/twitterIcon'
 
-export default function PopUp({isOpen,children,handleClose}){
+export default function PopUp({isOpen,children,handleClose,footer}){
     
     function close(){
         handleClose();
@@ -25,6 +25,9 @@ export default function PopUp({isOpen,children,handleClose}){
                     </div>
                     <div className={Styles.content}>
                         {children}
+                    </div>
+                    <div className={Styles.footer}>
+                        {footer}
                     </div>
                 </div>
             </>

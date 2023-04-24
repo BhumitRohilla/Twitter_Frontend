@@ -1,21 +1,24 @@
 .main{
     border: 1px solid var(--borderColor);
-    height: 35px;
+    height: 56px;
     overflow: hidden;
     border-radius: 10px;
     padding: 2px 3px;
+    box-sizing: border-box;
+    padding-top: 10px;
 }
 
 .pBig{
     font-size: 20px;
     color: white;
-   transition: all 0.2s linear;
+   transition: all 0.13s linear;
+   color: #5a5e62;
 }
 
 .pSmall{
     font-size: 10px;
     color: #1d9bf0;
-   transition: all 0.2s linear;
+   transition: all 0.13s linear;
 }
 
 .input{
@@ -24,4 +27,5 @@
     outline: none;
     color: white;
     width: 100%;
+    font-size: 20px;
 }

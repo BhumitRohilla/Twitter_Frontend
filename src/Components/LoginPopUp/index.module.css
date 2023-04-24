@@ -7,10 +7,24 @@
     cursor: pointer;
 }
 
-
-
 .main{
     display: flex;
     flex-direction: column;
     gap:30px;
+}
+
+.loginBtn{
+    height: 51px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.signUp{
+    display: inline;
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+    color: var(--blueColor);
+    cursor: pointer;
+    font-size: 16px;
 }

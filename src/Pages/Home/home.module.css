@@ -1,0 +1,138 @@
+.header{
+    position: sticky;
+    background-color: rgba(0,0,0, 0.7);
+    width: 100%;
+    height: 107px;
+    border-bottom: 1px var(--borderColor) solid;
+}
+
+.headerTitleContainer{
+    height: 53px;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+}
+
+.headerTitle{
+    font-weight: 400;
+}
+
+.buttonCluster{
+    display: flex;
+    height: 53px;
+}
+.topButton{
+    height: 100%;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tweetCreation{
+    display: flex;
+}
+
+.profileHolder{
+    width: 48px;
+    margin-right: 12px;
+}
+
+.profile{
+    width: 48px;
+    height: 48px;
+    background-image: url('/twitterPicture.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+}
+
+.tweetCreation{
+    padding: 0px 20px;
+
+}
+
+.tweetInputHolder{
+    width: 100%;
+    border-bottom: 1px solid var(--borderColor);
+    margin-bottom: 10px;
+}
+
+.tweetInput:empty::before{
+    content: "What's happening?";
+    color: gray;
+}
+
+.tweetInput{
+    font-family: helveticaNeueThin;
+    font-weight: 500;
+    display: block;
+    background-color: transparent;
+    color:  white;
+    border:  none;
+    font-size: 1.3rem;
+    margin: 12px 0;
+    width: 100%;
+    resize: vertical;
+    width: 100%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    resize: vertical;
+    max-width:500px;
+}
+
+.tweetInput:focus{
+    border: none;
+    outline: none;
+}
+
+
+.svg{
+    width: 20px;
+    height: 20px;
+}
+
+.mainHolder{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.hiddenInput{
+    display:  none;
+}
+
+.tweetAddon{
+    display: flex;
+    gap: 10px
+}
+
+.tweetBtn{
+    background-color: var(--blueColor);
+    color: white;
+    font-weight: 600;
+    padding: 0px 20px;
+}
+
+.imageHolder{
+    width: 100%;
+   max-width: 500px;
+   display: grid;
+
+}
+
+.tweetImage{
+    display: block;
+    width: 100%;
+}
+
+.tweeterTweet{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 500px;
+    margin-top: 20px;
+}
