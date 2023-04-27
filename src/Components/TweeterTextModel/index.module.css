@@ -1,0 +1,33 @@
+.mainBody{
+    box-sizing: border-box;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    border: 1px solid var(--borderColor);
+    overflow: hidden;
+    padding: 0px 20px;
+}
+
+.profileHolder{
+    width: 48px;
+    margin-right: 12px;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.profile{
+    width: 48px;
+    height: 48px;
+    background: url('/twitterPicture.jpg');
+    background-size: cover !important;
+    border-radius: 50%;
+    background-position: center !important;
+}
+
+.content{
+    width: 100%;
+}
+
+.userId{
+    font-size: 14px;
+}

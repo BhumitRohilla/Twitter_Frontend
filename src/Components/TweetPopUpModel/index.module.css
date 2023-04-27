@@ -1,0 +1,71 @@
+.openModel{
+    width: 600px;
+    height: fit-content;
+    min-height: 314px;
+    position: fixed;
+    top: 100px;
+    background-color: black;
+    left: 50%;
+    transform: translate(-50%,0);
+    border-radius: 10px;
+    z-index: 15;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    max-height: 800px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.close{
+    width: 35px;
+    height: 35px;
+
+    background-color: black;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.firstDiv{
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background-color: white;
+    transform: rotate(45deg);
+}
+
+.secondDiv{
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background-color: white;
+    transform: rotate(-45deg);
+}
+
+.addOns{
+    display: flex;
+    gap: 10px;
+}
+
+.bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: static;
+    bottom: 10px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+
+}
+
+
+.mainBtn{
+    background: var(--blueColor);
+    padding: 0px 15px;
+    color: white;
+    font-size: 1rem;
+}

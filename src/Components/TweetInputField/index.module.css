@@ -1,0 +1,35 @@
+
+
+.tweetInputHolder{
+    width: 100%;
+    border-bottom: 1px solid var(--borderColor);
+    margin-bottom: 10px;
+}
+
+.tweetInput:empty::before{
+    content: "What's happening?";
+    color: gray;
+}
+
+.tweetInput{
+    font-family: helveticaNeueThin;
+    font-weight: 500;
+    display: block;
+    background-color: transparent;
+    color:  white;
+    border:  none;
+    font-size: 1.3rem;
+    margin: 12px 0;
+    width: 100%;
+    resize: vertical;
+    width: 100%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    resize: vertical;
+    max-width:500px;
+}
+
+.tweetInput:focus{
+    border: none;
+    outline: none;
+}

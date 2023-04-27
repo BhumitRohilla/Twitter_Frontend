@@ -8,7 +8,7 @@ import SignupPopUp from "./Components/Signup";
 import "./App.css";
 import ModelOpen from "./Context/OpenModel";
 import { refreshApi } from "./Adapters/AuthApi";
-
+import TweetPopUpModel from "./Components/TweetPopUpModel";
 //twitter
 import twitterIcon from '/twitter.png';
 import ProtectedRoute from "./Components/ProtectedRoute";
