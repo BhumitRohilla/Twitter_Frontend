@@ -55,8 +55,8 @@
     height: 48px;
     margin-top: 12px;
     background-image: url('/twitterPicture.jpg');
-    background-size: cover;
-    background-position: center;
+    background-size: cover  !important;
+    background-position: center !important;
     border-radius: 50%;
 }
 

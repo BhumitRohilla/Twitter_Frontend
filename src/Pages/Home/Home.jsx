@@ -6,6 +6,7 @@ import Picker from "@emoji-mart/react";
 import Button from "../../Components/Button";
 import AuthContext from "../../Context/AuthContext";
 import jwtDecode from "jwt-decode";
+import defaultProfile from '/twitterPicture.jpg';
 
 import { getTweets, tweetSend } from "../../Adapters/Tweet";
 import { checkForExpire, refreshToken } from "../../Adapters/AuthApi";
@@ -117,6 +118,7 @@ export default function Home() {
         if (tweet === "") {
             return;
         }
+        
 
         changeSendState(true);
 
@@ -124,14 +126,16 @@ export default function Home() {
         data.append("tweet", tweet);
         imgFile.forEach((file) => {
             data.append("tweetImg", file);
-            console.log(data.getAll("tweetImg"));
         });
 
         console.log(data);
 
         if (checkForExpire(user.token)) {
             tweetSend(data, user.token)
-                .then((data) => {})
+                .then((data) => {
+                    console.log(data);
+                    setFollowTweets([data.result, ...followTweets])
+                })
                 .catch((err) => {
                     console.log(err);
                 })
@@ -144,7 +148,10 @@ export default function Home() {
             console.log("test");
             refreshToken(setUser).then((token) => {
                 tweetSend(data, token)
-                    .then((data) => {})
+                    .then((data) => {
+                        console.log(data);
+                        setFollowTweets([data.result, ...followTweets])
+                    })
                     .catch((err) => {
                         console.log(err);
                     })
@@ -214,7 +221,7 @@ export default function Home() {
                         }
                     >
                         <div className={Styles.profileHolder}>
-                            <div className={Styles.profile}></div>
+                            <div style={{ background: (user.profilepicture == null)?`url(${defaultProfile})`:`url(http://localhost:4000/Profile/${user.profilepicture})`}}  className={Styles.profile}></div>
                         </div>
                         <div className={Styles.mainHolder}>
                             <div className={Styles.tweetInputHolder}>
@@ -391,8 +398,8 @@ export default function Home() {
                     <div>
                         { (currentView === "Following") ? <>{
                         followTweets.map((element)=>{
+                            console.log(element);
                             return (
-
                                 <TweetModel tweet={element}/>
                             )
                         })

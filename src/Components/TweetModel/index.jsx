@@ -1,10 +1,12 @@
 import Styles from './index.module.css';
+import defaultProfile from '/twitterPicture.jpg';
 
 export default function TweetModel({tweet}){
+    console.log(tweet);
     return (
         <div className={Styles.mainBody}>
             <div className={Styles.profileHolder}>
-                <div className={Styles.profile}></div>
+                <div style={{ background: (tweet.profilepicture == null)?`url(${defaultProfile})`:`url(http://localhost:4000/Profile/${tweet.profilepicture})`}} className={Styles.profile}></div>
             </div>
             <div className={Styles.content}>
                 <p className={Styles.userId}>@{tweet.username}</p>
@@ -14,13 +16,14 @@ export default function TweetModel({tweet}){
 
                 <div>
                     {
-                        tweet.img.split(' ').reduce((prev,current)=>{
-                            if(current.trim()!== ''){
-                                prev.push(<img src={`http://localhost:4000/Tweets/${current}`}/>)
-                            }
-                            return prev;
-                        },[])
+                            tweet.img.split(' ').reduce((prev,current)=>{
+                                if(current.trim()!== ''){
+                                    prev.push(<img src={`http://localhost:4000/Tweets/${current}`}/>)
+                                }
+                                return prev;
+                            },[])
                     }
+                        
                 </div>
 
                 <div className={Styles.btnCluster}>
