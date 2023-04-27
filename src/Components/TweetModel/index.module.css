@@ -1,0 +1,79 @@
+.mainBody{
+    box-sizing: border-box;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    border: 1px solid var(--borderColor);
+    overflow: hidden;
+    padding: 0px 20px;
+}
+
+.profileHolder{
+    width: 48px;
+    margin-right: 12px;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.profile{
+    width: 48px;
+    height: 48px;
+    background: url('/twitterPicture.jpg');
+    background-size: cover;
+    border-radius: 50%;
+    background-position: center;
+}
+
+
+.userId{
+    font-size: 14px;
+}
+
+.btnCluster{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;    
+}
+
+
+.button{
+    width: 50px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.svg{
+    height: 14px;
+}
+
+.commentBtn:hover *{
+    transition: fill 0.2s linear, color 0.2s linear;
+    fill: #0000ff;
+    color: #0000ff;
+}
+
+.retweetBtn:hover *{
+    transition: stroke 0.2s linear, color 0.2s linear;
+    stroke: #00ff00 !important;
+    color: #00ff00;
+}
+
+.likeBtn:hover *{
+    transition: stroke 0.2s linear, color 0.2s linear;
+    stroke: #ff0000;
+    color: #ff0000;
+}
+
+.content{
+    width: 100%;
+}

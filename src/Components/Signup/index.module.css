@@ -1,0 +1,118 @@
+.condition{
+    margin-top: 30px;
+}
+.condition p{
+    color: gray;
+}
+
+.nextButton{
+    height: 50px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.headerContent{
+    font-size: 20px;
+}
+
+/* FirstStep */
+.firstStep{
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+
+
+/* SecondStep */
+.secondStep >  h1{
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+.secondStep > .container >  h2{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.secondStep > .container > p{
+    font-size: 16px;
+    margin-bottom: 30px;
+    font-family: helveticaNeueThin;
+}
+.secondStep > p{
+    color: gray;
+}
+
+.icon{
+    height:inherit;
+}
+
+.iconHolder{
+    width: 100%;
+    height: inherit;
+    text-align: center;
+    
+}
+
+
+/* ThirdStep */
+.thirdStep{
+    display: flex;
+    flex-direction: column;
+    gap:40px
+}
+.conditions{
+    /* font-family: helveticaNeueThin; */
+    font-size: 14px;
+    margin-top: 90px;
+    color: gray;
+}
+
+/* FourthStep */
+.fourthStep{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.fourthStep > div > .grayPara{
+    margin-top: 5px;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+.fifthStep{
+    display: flex;
+    flex-direction: column;
+}
+
+.fifthStep  .grayPara {
+    color: gray;
+    margin-left: 10px;
+}
+
+.profile{
+    width: 150px;
+    height: 150px;
+    background-position: center !important;
+    background-size: cover !important;
+    border-radius: 50%;
+
+    border: 2px solid black;
+    outline: 3px solid gray;
+}
+
+.pictureHolder{
+    margin: 0px auto;
+    width: fit-content;
+    margin-top: 100px;
+}
+
+.eightStep > div > .grayPara{
+    color: gray;
+    margin-bottom: 30px;
+}
+
+
+.followList{
+    overflow: hidden;
+    height: 300px;
+    overflow-y: scroll;
+}

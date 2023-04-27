@@ -1,8 +1,8 @@
 import React from "react";
 import Styles from './index.module.css'
-import TwitterIcon from '../../assets/twitterIcon'
 
-export default function PopUp({isOpen,children,handleClose,footer}){
+
+export default function PopUp({isOpen,children,handleClose,footer,header}){
     
     function close(){
         handleClose();
@@ -19,9 +19,7 @@ export default function PopUp({isOpen,children,handleClose,footer}){
                 <div className={Styles.main}>
                     <div className={Styles.header}>
                         <button title="Close" className={Styles.close} onClick={close}><div className={Styles.firstDiv}></div><div className={Styles.secondDiv}></div></button>
-                        <div className={Styles.iconHolder}>
-                            <TwitterIcon className={Styles.icon}/>
-                        </div>
+                        {header}
                     </div>
                     <div className={Styles.content}>
                         {children}

@@ -28,3 +28,14 @@
     cursor: pointer;
     font-size: 16px;
 }
+
+.icon{
+    height:inherit;
+}
+
+.iconHolder{
+    width: 100%;
+    height: inherit;
+    text-align: center;
+    
+}

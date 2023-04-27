@@ -7,6 +7,7 @@ import { validUserName } from '../../Adapters/rejexFunciton';
 import {loginApi} from '../../Adapters/AuthApi';
 import AuthContext from '../../Context/AuthContext';
 import ModelOpen from '../../Context/OpenModel';
+import TwitterIcon from '../../assets/twitterIcon'
 
 export default function index(props) {
   const [userName, setUserName] = useState('');
@@ -37,7 +38,7 @@ export default function index(props) {
   }
 
   return (
-    <PopUp isOpen={props.isOpen} handleClose={props.handleClose} footer={<><Button onClick={login} className={Styles.loginBtn}>Login</Button><p>Don't have an account? <button onClick={togleLoginSignUp} className={Styles.signUp}>Sign up</button></p></>}>
+    <PopUp isOpen={props.isOpen} handleClose={props.handleClose} header={<div className={Styles.iconHolder}><TwitterIcon className={Styles.icon}/></div>} footer={<><Button onClick={login} className={Styles.loginBtn}>Login</Button><p>Don't have an account? <button onClick={togleLoginSignUp} className={Styles.signUp}>Sign up</button></p></>}>
       <div className={Styles.main}>
         <h2 className={Styles.title}>Sign in to Twitter</h2>
         <Input label={'User Name'} value={userName} onChange={setUserName} type="text" required/>

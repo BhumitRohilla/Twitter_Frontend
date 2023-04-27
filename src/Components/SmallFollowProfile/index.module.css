@@ -1,0 +1,50 @@
+.main{
+    display: flex;
+    box-sizing: border-box;
+    padding: 15px 5px;
+    width: 100%;
+}
+
+.profileHolder{
+    width: 50px;
+    margin-right: 10px;
+}
+
+.profile{
+    width: 49px;
+    height: 49px;
+    background-size: cover !important;
+    background-position: center !important;
+    border-radius: 50%;
+}
+
+.username{
+    color: gray;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    max-width: 200px;
+}
+
+.followHolder{
+    margin-left: auto;
+    align-self: center;
+}
+
+.followBtn{
+    padding: 4px 15px;
+    font-size: 1rem;
+}
+
+
+.followedBtn{
+    background-color: var(--blueColor);
+    padding: 4px 15px;
+    font-size: 1rem;
+    color: white;
+}
+
+

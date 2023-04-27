@@ -4,12 +4,14 @@ import AuthContext from "./Context/AuthContext";
 import Navbar from "./Components/Navbar/index";
 import Home from './Pages/Home/Home'
 import LoginPopUp from "./Components/LoginPopUp/index";
+import SignupPopUp from "./Components/Signup";
 import "./App.css";
 import ModelOpen from "./Context/OpenModel";
 import { refreshApi } from "./Adapters/AuthApi";
 
 //twitter
 import twitterIcon from '/twitter.png';
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
 
@@ -34,10 +36,12 @@ function App() {
 
     function openLogin(){
       setLogin(true);
+      setReg(false);
     }
     
     function openSignUp(){
       setReg(true);
+      setLogin(false);
     }
     
     function togleLoginSignUp(){
@@ -63,7 +67,7 @@ function App() {
                 },
                 {
                     path: 'home',
-                    element: <Home/>
+                    element: <ProtectedRoute element={<Home/>}/>
                 }
             ],
         },
@@ -86,6 +90,12 @@ function App() {
                             isOpen={login}
                             handleClose={() => {
                                 setLogin(false);
+                            }}
+                        />
+                        <SignupPopUp
+                            isOpen={register}
+                            handleClose={()=>{
+                                setReg(false);
                             }}
                         />
                         <RouterProvider router={router} />
