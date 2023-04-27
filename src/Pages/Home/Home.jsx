@@ -11,6 +11,7 @@ import TweeterInputOptions from "../../Components/TweeterInputOptions";
 import Comment from "../../Components/Comment/index";
 import TweetInputField from "../../Components/TweetInputField";
 import ProfileModel from "../../Components/ProfileModel";
+import getToken from "../../Adapters/Token";
 const numberOfTweets = 100;
 
 export default function Home() {
@@ -87,43 +88,45 @@ export default function Home() {
                 break;
             }
         }
-        if (checkForExpire(user.token)) {
-            getTweets(type, { start, length: numberOfTweets }, user.token)
-                .then((data) => {
-                    if (type === "follow") {
-                        setFollowTweets([...followTweets, ...data]);
-                        let newLength = length;
-                        newLength[1] = length[1] + data.length;
-                        changeLength([...newLength]);
-                    } else {
-                    }
-                    console.log(data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-                .finally(() => {
-                    changeSendState(false);
-                    changeTweet("");
-                    changeImgFile([]);
-                });
-        } else {
-            console.log("test");
-            refreshToken(setUser).then((token) => {
-                getTweets(type, { start, length: numberOfTweets }, token)
-                    .then((data) => {
-                        console.log(data);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                    .finally(() => {
-                        changeSendState(false);
-                        changeTweet("");
-                        changeImgFile([]);
-                    });
+
+        getToken(user.token)
+        .then((token)=>{
+            if(token.newToken !== undefined){
+                let newUser = {...user};
+                setUser({user},'OldUser');
+                newUser.token = token.newToken;
+                console.log(newUser);
+                setUser({...newUser});
+                token = token.newToken;
+            }else{
+                token = token.oldToken;
+            }
+            getTweets(type, { start, length: numberOfTweets },token)
+            .then((data) => {
+                if (type === "follow") {
+                    setFollowTweets([...followTweets, ...data]);
+                    let newLength = length;
+                    newLength[1] = length[1] + data.length;
+                    changeLength([...newLength]);
+                } else {
+                }
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                changeSendState(false);
+                changeTweet("");
+                changeImgFile([]);
             });
-        }
+        })
+        .catch((err)=>{
+            if(err.message == 401){
+                setUser({});
+            }
+        })
+       
     }, [currentView]);
 
     function submit() {
@@ -143,8 +146,21 @@ export default function Home() {
 
         console.log(data);
 
-        if (checkForExpire(user.token)) {
-            tweetSend(data, user.token)
+
+        getToken(user.token)
+        .then((token)=>{
+            if(token.newToken !== undefined){
+                let newUser = {...user};
+                setUser({user},'OldUser');
+                newUser.token = token.newToken;
+                console.log(newUser);
+                setUser({...newUser});
+                token = token.newToken;
+            }else{
+                token = token.oldToken;
+            }
+            console.log(token);
+            tweetSend(data, token)
                 .then((data) => {
                     console.log(data);
                     setFollowTweets([data.result, ...followTweets]);
@@ -157,24 +173,12 @@ export default function Home() {
                     changeTweet("");
                     changeImgFile([]);
                 });
-        } else {
-            console.log("test");
-            refreshToken(setUser).then((token) => {
-                tweetSend(data, token)
-                    .then((data) => {
-                        console.log(data);
-                        setFollowTweets([data.result, ...followTweets]);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                    .finally(() => {
-                        changeSendState(false);
-                        changeTweet("");
-                        changeImgFile([]);
-                    });
-            });
-        }
+        })
+        .catch((err)=>{
+            if(err.message == 401){
+                setUser({});
+            }
+        })
     }
 
     function removeImage(i) {
@@ -262,7 +266,6 @@ export default function Home() {
                         {currentView === "Following" ? (
                             <>
                                 {followTweets.map((element) => {
-                                    console.log(element);
                                     return (
                                         <TweetModel
                                             tweet={element}

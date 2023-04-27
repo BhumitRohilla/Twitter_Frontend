@@ -51,6 +51,24 @@ export function refreshApi(){
     })
 }
 
+export function refreshTokenNew(){
+    return fetch(`http://${domain}:4000/auth/refresh`,{
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        console.log(data,'tokenFirst');
+        return data.token;
+    })
+}
+
 export function logoutApi(){
     return fetch('http://localhost:4000/auth/logout',{
         method:'GET',
@@ -63,6 +81,7 @@ export function logoutApi(){
     })
 }
 
+//!Depricated
 export function checkForExpire(token){
     try{
         const decoded = jwtDecode(token);
@@ -80,7 +99,9 @@ export function checkForExpire(token){
     }
 }
 
-export function refreshToken(setUser){
+
+//!Depricated
+export function refreshToken(){
     return refreshApi()
     .then((data)=>{
         setUser(data);

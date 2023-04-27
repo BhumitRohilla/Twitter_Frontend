@@ -2,16 +2,11 @@
     width: 600px;
     height: fit-content;
     min-height: 314px;
-    position: fixed;
-    top: 100px;
     background-color: black;
-    left: 50%;
-    transform: translate(-50%,0);
     border-radius: 10px;
-    z-index: 15;
     padding-bottom: 20px;
     box-sizing: border-box;
-    max-height: 800px;
+    max-height:500px;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -68,4 +63,13 @@
     padding: 0px 15px;
     color: white;
     font-size: 1rem;
+}
+
+.wrapper{
+    transform: scale(1);
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%,0);
+    z-index: 15;
 }

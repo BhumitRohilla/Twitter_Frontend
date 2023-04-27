@@ -1,7 +1,7 @@
-import {useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Styles from "./index.module.css";
 import TweeterInputOptions from "../TweeterInputOptions";
-import Button from '../Button/index'
+import Button from "../Button/index";
 
 export default function TweetPopUpModel({
     isOpen,
@@ -15,7 +15,7 @@ export default function TweetPopUpModel({
     showEmoji,
     changeShowEmoji,
     handleFile,
-    addEmoji
+    addEmoji,
 }) {
     function close() {
         handleClose();
@@ -27,40 +27,50 @@ export default function TweetPopUpModel({
         return (
             <>
                 <div className="blurBack"></div>
-                <div className="wrapper">
-                <div className={Styles.openModel}>
-                    <div>
-                        <button
-                            title="Close"
-                            className={Styles.close}
-                            onClick={close}
-                        >
-                            <div className={Styles.firstDiv}></div>
-                            <div className={Styles.secondDiv}></div>
-                        </button>
+                <div className={Styles.wrapper}>
+                    <div className={Styles.openModel}>
+                        <div>
+                            <button
+                                title="Close"
+                                className={Styles.close}
+                                onClick={close}
+                            >
+                                <div className={Styles.firstDiv}></div>
+                                <div className={Styles.secondDiv}></div>
+                            </button>
+                        </div>
+                        <div>{children}</div>
+                        <div className={Styles.bottom}>
+                            {!footer ? (
+                                <>
+                                    <TweeterInputOptions
+                                        className={Styles.addOns}
+                                        addEmoji={addEmoji}
+                                        changeImgFile={changeImgFile}
+                                        showEmoji={showEmoji}
+                                        changeShowEmoji={changeShowEmoji}
+                                        handleFile={handleFile}
+                                    />
+                                    <Button
+                                        onClick={onClick}
+                                        className={Styles.mainBtn}
+                                    >
+                                        {text}
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    {footer}
+                                    <Button
+                                        onClick={onClick}
+                                        className={Styles.mainBtn}
+                                    >
+                                        {text}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
-                    <div>{children}</div>
-                    <div className={Styles.bottom}>
-                        {!footer ? (
-                            <>
-                                <TweeterInputOptions
-                                    className={Styles.addOns}
-                                    addEmoji={addEmoji}
-                                    changeImgFile={changeImgFile}
-                                    showEmoji={showEmoji}
-                                    changeShowEmoji={changeShowEmoji}
-                                    handleFile={handleFile}
-                                />
-                                <Button className={Styles.mainBtn} >{text}</Button>
-                            </>
-                        ) : (
-                            <>
-                                {footer}
-                                <Button onClick={onClick} className={Styles.mainBtn} >{text}</Button>
-                            </>
-                        )}
-                    </div>
-                </div>
                 </div>
             </>
         );

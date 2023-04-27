@@ -2,13 +2,17 @@ import TweetPopUpModel from "../TweetPopUpModel/index";
 import TweeterTextModel from "../TweeterTextModel/index";
 import Styles from "./index.module.css";
 import TweetInputField from "../TweetInputField/index";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ProfileModel from "../ProfileModel";
+import getToken from "../../Adapters/Token";
+import AuthContext from "../../Context/AuthContext";
+import { commentSend } from "../../Adapters/Tweet";
 
 export default function Comment(props) {
     const [comment, changeComment] = useState("");
     const [imgFile, changeImgFile] = useState([]);
     const [showEmoji, changeShowEmoji] = useState(false);
+    const {user,setUser} = useContext(AuthContext);
 
 
     function handleFile(ev) {
@@ -48,6 +52,9 @@ export default function Comment(props) {
     }
 
     function handleClose(){
+        changeComment("");
+        changeImgFile([]);
+        changeShowEmoji(false)
         props.handleClose();
     }
 
@@ -63,6 +70,42 @@ export default function Comment(props) {
         }
     }
 
+    function onClick(){
+        if(comment.trim() === ""){
+            return;
+        }
+        const data = new FormData();
+        data.append("comment",comment);
+        data.append("t_id",props.tweet.t_id);
+
+        imgFile.forEach((file)=>{
+            data.append("tweetImg",file);
+        });
+
+        getToken(user.token)
+        .then((token)=>{
+            if(token.newToken !== undefined){
+                let newUser = {...user};
+                setUser({user},'OldUser');
+                newUser.token = token.newToken;
+                console.log(newUser);
+                setUser({...newUser});
+                token = token.newToken;
+            }else{
+                token = token.oldToken;
+            }
+            commentSend(data,token)
+            .then((res)=>{
+                if(res === true){
+                    handleClose();
+                }else{
+                    //TODO: remove alert from here
+                    alert("Some error occure");
+                }
+            })
+        })
+    }
+
     return (
         <>
             <TweetPopUpModel
@@ -75,6 +118,7 @@ export default function Comment(props) {
                 changeShowEmoji = {changeShowEmoji}
                 addEmoji = {addEmoji}
                 text={'Replay'}
+                onClick={onClick}
             >
                 <TweeterTextModel 
                     tweet={props.tweet}

@@ -119,7 +119,7 @@ export default function TweeterInputOptions({
                 </svg>
                 {showEmoji && (
                     <div style={{ position: "absolute" }}>
-                        <Picker st data={data} onEmojiSelect={addEmoji} />
+                        <Picker data={data} onEmojiSelect={addEmoji} />
                     </div>
                 )}
             </div>

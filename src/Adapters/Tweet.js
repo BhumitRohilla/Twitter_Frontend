@@ -1,3 +1,26 @@
+export function commentSend(data,token){
+    return fetch('http://localhost:4000/tweet/sendComment',{
+        method: 'POST',
+        credentials: 'include',
+        headers:{
+            'Authorization': 'Bearer '+token,
+        },
+        body:data
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((err)=>{
+        console.log(err);
+        return false;
+    })
+}
+
+
 export function tweetSend(data,token){
     return fetch('http://localhost:4000/tweet/send',{
         method:'POST',

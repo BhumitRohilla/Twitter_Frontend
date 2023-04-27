@@ -7,7 +7,6 @@ export default function TweetModel({
     handleRetweetPress,
     handleLikePress,
 }) {
-    console.log(tweet);
     return (
         <TweeterTextModel tweet={tweet}>
             <div className={Styles.btnCluster}>
