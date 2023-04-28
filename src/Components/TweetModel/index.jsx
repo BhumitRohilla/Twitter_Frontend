@@ -1,14 +1,90 @@
 import Styles from "./index.module.css";
 import TweeterTextModel from "../TweeterTextModel";
+import { useContext, useState } from "react";
+import getToken from "../../Adapters/Token";
+import AuthContext from "../../Context/AuthContext";
+import { likedApi,removeLikeApi } from "../../Adapters/UserApi";
 
 export default function TweetModel({
     tweet,
     handleCommentPress,
     handleRetweetPress,
-    handleLikePress,
+    className
 }) {
+    const [liked,setLiked] = useState( (tweet.liked === null)?false:true)
+    const {user,setUser}   =  useContext(AuthContext);
+
+    function handleLikePress(){
+        console.log("Liked Pressed");
+        if(liked){
+            removeLike();
+        }else{
+            like();
+        }
+    }
+
+    function like(){
+        getToken(user.token)
+        .then((token)=>{
+            if(token.newToken !== undefined){
+                let newUser = {...user};
+                setUser({user},'OldUser');
+                newUser.token = token.newToken;
+                console.log(newUser);
+                setUser({...newUser});
+                token = token.newToken;
+            }else{
+                token = token.oldToken;
+            }
+            likedApi(tweet.t_id,token)
+            .then((res)=>{
+                if(res){
+                    setLiked(!liked);
+                }else{
+                    //TODO: Remove alert;
+                    alert("Server error occure");
+                }
+            })
+        })
+        .catch((err)=>{
+            if(err.message == 401){
+                setUser({});
+            }
+        })
+    }
+
+    function removeLike(){
+        getToken(user.token)
+        .then((token)=>{
+            if(token.newToken !== undefined){
+                let newUser = {...user};
+                setUser({user},'OldUser');
+                newUser.token = token.newToken;
+                console.log(newUser);
+                setUser({...newUser});
+                token = token.newToken;
+            }else{
+                token = token.oldToken;
+            }
+            removeLikeApi(tweet.t_id,token)
+            .then((res)=>{
+                if(res){
+                    setLiked(!liked);
+                }else{
+                    //TODO: Remove alert;
+                    alert("Server error occure");
+                }
+            })
+        })
+        .catch((err)=>{
+            if(err.message == 401){
+                setUser({});
+            }
+        })
+    }
+
     return (
-        <TweeterTextModel tweet={tweet}>
+        <TweeterTextModel tweet={tweet} className={className}>
             <div className={Styles.btnCluster}>
                 <button onClick={()=>handleCommentPress(tweet)} className={`${Styles.button} ${Styles.commentBtn}`}>
                     <svg
@@ -28,7 +104,7 @@ export default function TweetModel({
                             <path d="M2 2H20V3H21V17H20V18H12V19H11V20H10V21H6V18H2V17H1V3H2V2M3 4V16H8V19H9V18H10V17H11V16H19V4H3Z"></path>
                         </g>
                     </svg>
-                    <p>Test</p>
+                    <p>Comment</p>
                 </button>
                 <button onClick={()=>handleRetweetPress(tweet)} className={`${Styles.button} ${Styles.retweetBtn}`}>
                     <svg
@@ -38,7 +114,6 @@ export default function TweetModel({
                         id="retweet-rounsd"
                         data-name="Flat Line"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="icon flat-line"
                     >
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g
@@ -100,11 +175,11 @@ export default function TweetModel({
                             ></polyline>
                         </g>
                     </svg>
-                    <p>Test</p>
+                    <p>Retweet</p>
                 </button>
-                <button onClick={()=>handleLikePress(tweet)} className={`${Styles.button} ${Styles.likeBtn}`}>
+                <button onClick={handleLikePress} className={`${Styles.button} ${Styles.likeBtn}`}>
                     <svg
-                        className={`${Styles.like} ${Styles.svg}`}
+                        className={`${Styles.like} ${Styles.svg} ${(liked)?Styles.liked:''}`}
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +205,7 @@ export default function TweetModel({
                             </g>{" "}
                         </g>
                     </svg>
-                    <p>Test</p>
+                    <p>Liked</p>
                 </button>
                 <button className={`${Styles.button}`}>
                     <svg
@@ -155,7 +230,7 @@ export default function TweetModel({
                             ></path>{" "}
                         </g>
                     </svg>
-                    <p>Test</p>
+                    <p>Views</p>
                 </button>
             </div>
         </TweeterTextModel>

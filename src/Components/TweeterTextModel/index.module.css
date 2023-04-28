@@ -6,6 +6,7 @@
     border: 1px solid var(--borderColor);
     overflow: hidden;
     padding: 0px 20px;
+    position: relative;
 }
 
 .profileHolder{
@@ -30,4 +31,11 @@
 
 .userId{
     font-size: 14px;
+}
+
+.comment{
+    position: absolute;
+    right: 10px;
+    font-size: 14px;
+    color: var(--blueColor);
 }

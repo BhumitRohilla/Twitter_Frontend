@@ -44,7 +44,6 @@ export function refreshApi(){
         let obj = {};
         obj.token = data.token;
         let user = jwtDecode(data.token);
-        console.log(user);
         user = user.userInfo;
         Object.assign(obj,{...user});
         return obj;
@@ -64,7 +63,6 @@ export function refreshTokenNew(){
         }
     })
     .then((data)=>{
-        console.log(data,'tokenFirst');
         return data.token;
     })
 }
@@ -89,7 +87,6 @@ export function checkForExpire(token){
             console.log("Token refreshed");
             return false;
         }else{
-            console.log(decoded,decoded.exp+decoded.iat,Date.now()/1000+4);
             return true;
         }
     }

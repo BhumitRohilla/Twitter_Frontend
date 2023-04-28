@@ -3,6 +3,7 @@
     box-sizing: border-box;
     padding: 15px 5px;
     width: 100%;
+    position: relative;
 }
 
 .profileHolder{
@@ -26,12 +27,15 @@
     display: flex;
     flex-direction: column;
     align-content: space-between;
-    max-width: 200px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .followHolder{
     margin-left: auto;
     align-self: center;
+    position: absolute;
+    right: 10px;
 }
 
 .followBtn{

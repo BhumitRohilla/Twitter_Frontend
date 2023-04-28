@@ -125,3 +125,65 @@ export  function getListOfUser(){
         }
     })
 }
+
+export function getListOfUserToFollow(payLoad,token){
+    return fetch(`http://localhost:4000/user/userToFollow`,{
+        method: 'POST',
+        credentials: 'include',
+        headers:{
+            'Authorization': 'Bearer '+token,
+            'Content-Type' : 'application/JSON'
+        },
+        body:JSON.stringify(payLoad)
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+}
+
+export function likedApi(t_id,token){
+    return fetch(`http://localhost:4000/user/liked/${t_id}`,{
+        method: 'GET',
+        credentials: 'include',
+        headers:{
+            'Authorization': 'Bearer '+token
+        },
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((err)=>{
+        console.log(err);
+        return false;
+    })
+}
+
+export function removeLikeApi(t_id,token){
+    return fetch(`http://localhost:4000/user/removeLike/${t_id}`,{
+        method: 'GET',
+        credentials: 'include',
+        headers:{
+            'Authorization': 'Bearer '+token
+        }
+    })
+    .then((res)=>{
+        console.log(res);
+        if(res.status === 200){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((err)=>{
+        console.log(err);
+        return false;
+    })
+}

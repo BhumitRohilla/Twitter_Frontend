@@ -15,6 +15,7 @@ export default function TweeterTextModel({tweet,children,className}){
                 className={Styles.profile}
             ></div>
         </div>
+        
         <div className={Styles.content}>
             <p className={Styles.userId}>@{tweet.username}</p>
             <p>{tweet.text}</p>
@@ -33,6 +34,7 @@ export default function TweeterTextModel({tweet,children,className}){
             </div>
             {children}
         </div>
+        {tweet.commentof != null?<div className={Styles.comment}>comment</div>:<></>}
     </div>
     )
 }

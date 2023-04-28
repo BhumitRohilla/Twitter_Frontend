@@ -5,13 +5,13 @@ import Button from "../../Components/Button";
 import AuthContext from "../../Context/AuthContext";
 
 import { getTweets, tweetSend } from "../../Adapters/Tweet";
-import { checkForExpire, refreshToken } from "../../Adapters/AuthApi";
 import TweetModel from "../../Components/TweetModel/index";
 import TweeterInputOptions from "../../Components/TweeterInputOptions";
 import Comment from "../../Components/Comment/index";
 import TweetInputField from "../../Components/TweetInputField";
 import ProfileModel from "../../Components/ProfileModel";
 import getToken from "../../Adapters/Token";
+import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
 const numberOfTweets = 100;
 
 export default function Home() {
@@ -66,10 +66,6 @@ export default function Home() {
     }
 
     function handleRetweetPress(tweet) {
-        console.log(tweet);
-    }
-
-    function handleLikePress(tweet) {
         console.log(tweet);
     }
 
@@ -132,7 +128,7 @@ export default function Home() {
     function submit() {
         //checks;
 
-        if (tweet === "") {
+        if (tweet.trim() === "") {
             return;
         }
 
@@ -267,11 +263,11 @@ export default function Home() {
                             <>
                                 {followTweets.map((element) => {
                                     return (
-                                        <TweetModel
+                                        <TweetModel key={element.t_id}
                                             tweet={element}
                                             handleCommentPress={handleCommentPress}
                                             handleRetweetPress={handleRetweetPress}
-                                            handleLikePress={handleLikePress}
+                                            className={Styles.tweetHolder}
                                         />
                                     );
                                 })}
@@ -289,7 +285,7 @@ export default function Home() {
             }
             secondElement={
                 <>
-                    <p>Test</p>
+                    <FollowCompnenetForSideBar key="HomeFollowSideBar"/>
                 </>
             }
         />

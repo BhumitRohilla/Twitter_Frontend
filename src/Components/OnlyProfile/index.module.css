@@ -1,0 +1,78 @@
+.header{
+    position: static;
+    top: 0px;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.headerpicture{
+    background-color: #333639;
+    width: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.profile{
+    height: 133px;
+    width: 133px;
+}
+
+.headerpicture{
+    width: 100%;
+}
+
+.profileHolder{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    aspect-ratio: 100/15;
+    max-height: 68px;
+}
+
+.followBtn{
+    position: sticky;
+    top: 10px;
+    padding: 10px 20px;
+    background-color: var(--blueColor);
+    color: white;
+    font-size: 1rem;
+    margin-left: auto;
+}
+
+.profile{
+    width: 25%;
+    padding-top: 25%;
+    height: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: -70%;
+}
+
+.profileContent{
+    padding: 10px 20px;
+    position: relative;
+}
+
+.nameTitle{
+    /* padding: 0 20px; */
+}
+
+.usernamTitle{
+    color: gray;
+    font-size: 0.95rem;
+    font-weight: 300;
+}
+
+@media only screen and (max-width: 517px) {
+    .profile{
+        top: -50%;
+    }
+    
+}
+
+@media only screen and (max-width: 261px) {
+    .profile{
+        visibility: hidden;
+    }
+    
+}

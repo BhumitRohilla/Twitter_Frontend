@@ -6,7 +6,6 @@ import { Outlet } from 'react-router-dom'
 
 export default function Navbar(){
     let {user} = useContext(AuthContext);
-    console.log(user);
     if(user.username === undefined){
         return (
             <>
