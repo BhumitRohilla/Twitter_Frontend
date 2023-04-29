@@ -202,3 +202,17 @@ export function searchUsers(username,signal){
         return data.result;
     })
 }
+
+export function checkAllUserTweets(u_id){
+    return fetch(`http://localhost:4000/check/getAllTweetsOfUser/${u_id}`)
+    .then((res)=>{
+        if(res.status === 200 ){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        return data.result;
+    })
+}

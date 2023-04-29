@@ -6,15 +6,11 @@ import AuthContext from "../../Context/AuthContext";
 import { likedApi,removeLikeApi } from "../../Adapters/UserApi";
 import ModelOpen from "../../Context/OpenModel";
 
-export default function TweetModel({
-    tweet,
-    handleCommentPress,
-    handleRetweetPress,
-    className
-}) {
-    const [liked,setLiked] = useState( (tweet.liked === null)?false:true)
+export default function TweetModel(props) {
+    const [liked,setLiked] = useState( (props.tweet.liked === null||props.tweet.liked===undefined)?false:true)
     const {user,setUser}   =  useContext(AuthContext);
     const {openLogin} = useContext(ModelOpen);
+    
 
     function handleLikePress(){
         if(user?.token === undefined){
@@ -23,6 +19,7 @@ export default function TweetModel({
         console.log("Liked Pressed");
         if(liked){
             removeLike();
+
         }else{
             like();
         }
@@ -41,10 +38,11 @@ export default function TweetModel({
             }else{
                 token = token.oldToken;
             }
-            likedApi(tweet.t_id,token)
+            likedApi(props.tweet.t_id,token)
             .then((res)=>{
                 if(res){
                     setLiked(!liked);
+                    props.handleLikePress(props.tweet.t_id,true);
                 }else{
                     //TODO: Remove alert;
                     alert("Server error occure");
@@ -71,10 +69,11 @@ export default function TweetModel({
             }else{
                 token = token.oldToken;
             }
-            removeLikeApi(tweet.t_id,token)
+            removeLikeApi(props.tweet.t_id,token)
             .then((res)=>{
                 if(res){
                     setLiked(!liked);
+                    props.handleLikePress(props.tweet.t_id,null);
                 }else{
                     //TODO: Remove alert;
                     alert("Server error occure");
@@ -89,9 +88,9 @@ export default function TweetModel({
     }
 
     return (
-        <TweeterTextModel tweet={tweet} className={className}>
+        <TweeterTextModel tweet={props.tweet} className={props.className}>
             <div className={Styles.btnCluster}>
-                <button onClick={()=>handleCommentPress(tweet)} className={`${Styles.button} ${Styles.commentBtn}`}>
+                <button onClick={()=>props.handleCommentPress(props.tweet)} className={`${Styles.button} ${Styles.commentBtn}`}>
                     <svg
                         className={`${Styles.comment} ${Styles.svg}`}
                         fill="#ffffff"
@@ -111,7 +110,7 @@ export default function TweetModel({
                     </svg>
                     <p>Comment</p>
                 </button>
-                <button onClick={()=>handleRetweetPress(tweet)} className={`${Styles.button} ${Styles.retweetBtn}`}>
+                <button onClick={()=>props.handleRetweetPress(props.tweet)} className={`${Styles.button} ${Styles.retweetBtn}`}>
                     <svg
                         className={`${Styles.svg} ${Styles.retweet}`}
                         fill="#000000"

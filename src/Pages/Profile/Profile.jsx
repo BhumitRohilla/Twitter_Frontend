@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import AuthContext from '../../Context/AuthContext'
 import OnlyProfile from '../../Components/OnlyProfile'
+import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
+import SearchBar from "../../Components/SearchBar";
 
 export default function  Profile(){
     const data = useLoaderData();
@@ -12,7 +14,12 @@ export default function  Profile(){
     return (
         <Twitter
             firstElement={<OnlyProfile userToShow={data}/>}
-            secondElement={<>Test</>}
+            secondElement={
+                <>
+                    <SearchBar/>
+                    <FollowCompnenetForSideBar key="FollowSideBar"/>
+                </>
+            }
         />
     )
 }

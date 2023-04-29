@@ -10,17 +10,28 @@ import {
     getTweetsOfUser,
 } from "../../Adapters/ProfileApi";
 import defaultProfile from "/twitterPicture.jpg";
+import { checkAllUserTweets } from "../../Adapters/UserApi";
+import ModelOpen from "../../Context/OpenModel";
+import Comment from "../Comment/index";
+import Steps from "../TweetModel/step1";
 
 export default function OnlyProfile({ userToShow }) {
     const [step, changeStep] = useState(1);
     const { user, setUser } = useContext(AuthContext);
-
+    const { openLogin } = useContext(ModelOpen);
     const [tweet, setTweet] = useState([]);
     const [comment, setComment] = useState([]);
     const [likes, setLikedTweet] = useState([]);
 
-    function handleCommentPress() {
-        console.log("Comment");
+    const [commentModel, setCommentModel] = useState(false);
+    const [tweetToComment, setTweetToComment] = useState(null);
+    function handleCommentPress(tweet) {
+        if (user.u_id !== undefined) {
+            setCommentModel(true);
+            setTweetToComment(tweet);
+        } else {
+            openLogin();
+        }
     }
     function handleRetweetPress() {
         console.log("Retweet");
@@ -28,6 +39,15 @@ export default function OnlyProfile({ userToShow }) {
 
     useEffect(() => {
         if (user.token === undefined) {
+            checkAllUserTweets(userToShow.u_id)
+                .then((data) => {
+                    setTweet(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    //TODO: remove alert
+                    alert("Server error occures");
+                });
         } else {
             getToken(user.token)
                 .then((token) => {
@@ -77,7 +97,27 @@ export default function OnlyProfile({ userToShow }) {
                     }
                 });
         }
-    }, []);
+    }, [userToShow.u_id]);
+
+    function showTweet() {
+        changeStep(1);
+    }
+
+    function showComment() {
+        if (user.u_id != undefined) {
+            changeStep(2);
+        } else {
+            openLogin();
+        }
+    }
+
+    function showLikes() {
+        if (user.u_id != undefined) {
+            changeStep(3);
+        } else {
+            openLogin();
+        }
+    }
 
     return (
         <>
@@ -86,7 +126,11 @@ export default function OnlyProfile({ userToShow }) {
                 {userToShow.headerpicture === null ? (
                     <div className={Styles.headerpicture} />
                 ) : (
-                    <img className={Styles.headerpicture} src={`http://localhost:4000/header/${userToShow.headerpicture}`} alt="" />
+                    <img
+                        className={Styles.headerpicture}
+                        src={`http://localhost:4000/header/${userToShow.headerpicture}`}
+                        alt=""
+                    />
                 )}
             </div>
             <div className={Styles.profileContent}>
@@ -121,17 +165,17 @@ export default function OnlyProfile({ userToShow }) {
             </div>
 
             <div className={Styles.btnCluster}>
-                <button onClick={() => changeStep(1)} className={Styles.btn}>
+                <button onClick={showTweet} className={Styles.btn}>
                     <div className={step === 1 ? Styles.active : null}>
                         Tweets
                     </div>
                 </button>
-                <button onClick={() => changeStep(2)} className={Styles.btn}>
+                <button onClick={showComment} className={Styles.btn}>
                     <div className={step === 2 ? Styles.active : null}>
                         Replies
                     </div>
                 </button>
-                <button onClick={() => changeStep(3)} className={Styles.btn}>
+                <button onClick={showLikes} className={Styles.btn}>
                     <div className={step === 3 ? Styles.active : null}>
                         Likes
                     </div>
@@ -139,44 +183,43 @@ export default function OnlyProfile({ userToShow }) {
             </div>
             <div>
                 {step === 1 && (
-                    <>
-                        {tweet.map((element) => {
-                            return (
-                                <TweetModel
-                                    tweet={element}
-                                    handleCommentPress={handleCommentPress}
-                                    handleRetweetPress={handleRetweetPress}
-                                />
-                            );
-                        })}
-                    </>
+                    <Steps
+                        tweet={tweet}
+                        setTweet={setTweet}
+                        handleCommentPress={handleCommentPress}
+                        handleRetweetPress={handleRetweetPress}
+                    />
                 )}
                 {step === 2 && (
                     <>
-                        {comment.map((element) => {
-                            return (
-                                <TweetModel
-                                    tweet={element}
-                                    handleCommentPress={handleCommentPress}
-                                    handleRetweetPress={handleRetweetPress}
-                                />
-                            );
-                        })}
+                        <Steps
+                            tweet={comment}
+                            setTweet={setComment}
+                            handleCommentPress={handleCommentPress}
+                            handleRetweetPress={handleRetweetPress}
+                        />
                     </>
                 )}
                 {step === 3 && (
                     <>
-                        {likes.map((element) => {
-                            return (
-                                <TweetModel
-                                    tweet={element}
-                                    handleCommentPress={handleCommentPress}
-                                    handleRetweetPress={handleRetweetPress}
-                                />
-                            );
-                        })}
+                        <Steps
+                            tweet={likes}
+                            setTweet={setLikedTweet}
+                            handleCommentPress={handleCommentPress}
+                            handleRetweetPress={handleRetweetPress}
+                        />
                     </>
                 )}
+            </div>
+            <div>
+                <Comment
+                    tweet={tweetToComment}
+                    isOpen={commentModel}
+                    handleClose={() => {
+                        setCommentModel(false);
+                        setTweetToComment(null);
+                    }}
+                />
             </div>
         </>
     );

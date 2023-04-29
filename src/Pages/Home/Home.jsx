@@ -87,43 +87,42 @@ export default function Home() {
         }
 
         getToken(user.token)
-        .then((token)=>{
-            if(token.newToken !== undefined){
-                let newUser = {...user};
-                setUser({user},'OldUser');
-                newUser.token = token.newToken;
-                console.log(newUser);
-                setUser({...newUser});
-                token = token.newToken;
-            }else{
-                token = token.oldToken;
-            }
-            getTweets(type, { start, length: numberOfTweets },token)
-            .then((data) => {
-                if (type === "follow") {
-                    setFollowTweets([...followTweets, ...data]);
-                    let newLength = length;
-                    newLength[1] = length[1] + data.length;
-                    changeLength([...newLength]);
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    console.log(newUser);
+                    setUser({ ...newUser });
+                    token = token.newToken;
                 } else {
+                    token = token.oldToken;
                 }
-                console.log(data);
+                getTweets(type, { start, length: numberOfTweets }, token)
+                    .then((data) => {
+                        if (type === "follow") {
+                            setFollowTweets([...followTweets, ...data]);
+                            let newLength = length;
+                            newLength[1] = length[1] + data.length;
+                            changeLength([...newLength]);
+                        } else {
+                        }
+                        console.log(data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                    .finally(() => {
+                        changeSendState(false);
+                        changeTweet("");
+                        changeImgFile([]);
+                    });
             })
             .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                changeSendState(false);
-                changeTweet("");
-                changeImgFile([]);
+                if (err.message == 401) {
+                    setUser({});
+                }
             });
-        })
-        .catch((err)=>{
-            if(err.message == 401){
-                setUser({});
-            }
-        })
-       
     }, [currentView]);
 
     function submit() {
@@ -143,39 +142,38 @@ export default function Home() {
 
         console.log(data);
 
-
         getToken(user.token)
-        .then((token)=>{
-            if(token.newToken !== undefined){
-                let newUser = {...user};
-                setUser({user},'OldUser');
-                newUser.token = token.newToken;
-                console.log(newUser);
-                setUser({...newUser});
-                token = token.newToken;
-            }else{
-                token = token.oldToken;
-            }
-            console.log(token);
-            tweetSend(data, token)
-                .then((data) => {
-                    console.log(data);
-                    setFollowTweets([data.result, ...followTweets]);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-                .finally(() => {
-                    changeSendState(false);
-                    changeTweet("");
-                    changeImgFile([]);
-                });
-        })
-        .catch((err)=>{
-            if(err.message == 401){
-                setUser({});
-            }
-        })
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    console.log(newUser);
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+                console.log(token);
+                tweetSend(data, token)
+                    .then((data) => {
+                        console.log(data);
+                        setFollowTweets([data.result, ...followTweets]);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                    .finally(() => {
+                        changeSendState(false);
+                        changeTweet("");
+                        changeImgFile([]);
+                    });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
     }
 
     function removeImage(i) {
@@ -187,6 +185,14 @@ export default function Home() {
             return true;
         });
         changeImgFile(newImageArray);
+    }
+
+    function addToInput(username){
+        let newString = tweet.split([' ']);
+        newString.pop();
+        newString.push(`@${username} `);
+        newString = newString.join(' ');
+        changeTweet(newString);
     }
 
     return (
@@ -235,10 +241,17 @@ export default function Home() {
                         }
                     >
                         <div className={Styles.profileHolder}>
-                            <UserProfilePicture className={Styles.profile}/>
+                            <UserProfilePicture className={Styles.profile} />
                         </div>
                         <div className={Styles.mainHolder}>
-                            <TweetInputField handleInput={handleInput} text={tweet} imgFile={imgFile} placeholder={"What's happening?"} removeImage={removeImage}/>
+                            <TweetInputField
+                                handleInput={handleInput}
+                                text={tweet}
+                                imgFile={imgFile}
+                                placeholder={"What's happening?"}
+                                removeImage={removeImage}
+                                addToInput = {addToInput}
+                            />
                             <div className={Styles.tweeterTweet}>
                                 <TweeterInputOptions
                                     className={Styles.tweetAddon}
@@ -264,10 +277,15 @@ export default function Home() {
                             <>
                                 {followTweets.map((element) => {
                                     return (
-                                        <TweetModel key={element.t_id}
+                                        <TweetModel
+                                            key={element.t_id}
                                             tweet={element}
-                                            handleCommentPress={handleCommentPress}
-                                            handleRetweetPress={handleRetweetPress}
+                                            handleCommentPress={
+                                                handleCommentPress
+                                            }
+                                            handleRetweetPress={
+                                                handleRetweetPress
+                                            }
                                             className={Styles.tweetHolder}
                                         />
                                     );
@@ -278,16 +296,21 @@ export default function Home() {
                         )}
                     </div>
                     <div>
-                    <>
-                        <Comment tweet={tweetToComment} isOpen={commentModel} handleClose={()=>{setCommentModel(false);setTweetToComment(null)}} />
-                    </>
+                        <Comment
+                            tweet={tweetToComment}
+                            isOpen={commentModel}
+                            handleClose={() => {
+                                setCommentModel(false);
+                                setTweetToComment(null);
+                            }}
+                        />
                     </div>
                 </>
             }
             secondElement={
                 <>
-                    <SearchBar/>
-                    <FollowCompnenetForSideBar key="HomeFollowSideBar"/>
+                    <SearchBar />
+                    <FollowCompnenetForSideBar key="FollowSideBar" />
                 </>
             }
         />

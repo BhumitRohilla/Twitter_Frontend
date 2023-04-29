@@ -97,13 +97,13 @@ export default function Comment(props) {
             commentSend(data,token)
             .then((res)=>{
                 if(res === true){
-                    handleClose();
                 }else{
                     //TODO: remove alert from here
                     alert("Some error occure");
                 }
             })
         })
+        handleClose();
     }
 
     return (
