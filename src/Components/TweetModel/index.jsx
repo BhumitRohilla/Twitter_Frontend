@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import getToken from "../../Adapters/Token";
 import AuthContext from "../../Context/AuthContext";
 import { likedApi,removeLikeApi } from "../../Adapters/UserApi";
+import ModelOpen from "../../Context/OpenModel";
 
 export default function TweetModel({
     tweet,
@@ -13,8 +14,12 @@ export default function TweetModel({
 }) {
     const [liked,setLiked] = useState( (tweet.liked === null)?false:true)
     const {user,setUser}   =  useContext(AuthContext);
+    const {openLogin} = useContext(ModelOpen);
 
     function handleLikePress(){
+        if(user?.token === undefined){
+            openLogin();
+        }
         console.log("Liked Pressed");
         if(liked){
             removeLike();

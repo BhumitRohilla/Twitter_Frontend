@@ -8,13 +8,18 @@
 .headerpicture{
     background-color: #333639;
     width: 100%;
+    aspect-ratio: 27/9;
     background-size: cover !important;
     background-position: center !important;
+    border: none;
+    outline: none;
 }
 
 .profile{
     height: 133px;
     width: 133px;
+    background-position: center !important;
+    background-size: cover !important;
 }
 
 .headerpicture{
@@ -45,12 +50,13 @@
     height: 0;
     border-radius: 50%;
     position: absolute;
-    top: -70%;
+    top: -55%;
 }
 
 .profileContent{
     padding: 10px 20px;
     position: relative;
+    margin-bottom: 10px;
 }
 
 .nameTitle{
@@ -63,6 +69,52 @@
     font-weight: 300;
 }
 
+.followTitle{
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: gray;
+    margin-top: 10px;
+}
+
+.whiteText{
+    color: white;
+}
+
+.btnCluster{
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid var(--borderColor);
+}
+
+.btn{
+    width: 100%;
+    background-color: transparent;
+    padding: 0 20px;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    height: 30px;
+    
+}
+
+.btn > div{
+    margin: 0 auto;
+    width: fit-content;
+    height: 100%;
+}
+
+.active{
+    border-bottom: 2px solid var(--blueColor);
+}
+
+
+@media only screen and (max-width: 611px) {
+    .profile{
+        top: -55%;
+    }
+}
+
+
 @media only screen and (max-width: 517px) {
     .profile{
         top: -50%;
@@ -70,9 +122,16 @@
     
 }
 
-@media only screen and (max-width: 261px) {
+
+@media only screen and (max-width: 359px){
     .profile{
-        visibility: hidden;
+        top: -40%;
     }
-    
+}
+
+
+@media only screen and (max-width: 223px){
+    .profile{
+        top: -30px;
+    }
 }

@@ -11,7 +11,7 @@ export default function  Profile(){
     console.log(data,"test");
     return (
         <Twitter
-            firstElement={<OnlyProfile user={data}/>}
+            firstElement={<OnlyProfile userToShow={data}/>}
             secondElement={<>Test</>}
         />
     )
