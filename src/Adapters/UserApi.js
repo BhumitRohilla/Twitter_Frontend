@@ -22,7 +22,6 @@ export function changeProfile(data,token){
 export function checkIfUsernameAvailable(data){
     return fetch('http://localhost:4000/check/username',{
         method:'POST',
-        credentials:'include',
         headers:{
             'Content-Type'  :'application/JSON'
         },
@@ -185,5 +184,21 @@ export function removeLikeApi(t_id,token){
     .catch((err)=>{
         console.log(err);
         return false;
+    })
+}
+
+export function searchUsers(username,signal){
+    return fetch(`http://localhost:4000/check/searchUsers/${username}`,{
+        signal:signal
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        return data.result;
     })
 }

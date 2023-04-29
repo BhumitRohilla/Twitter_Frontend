@@ -1,11 +1,12 @@
 import Style from "./index.module.css";
-import defaultProfile from "/twitterPicture.jpg";
+
 import Button from "../Button";
 import { useContext, useState } from "react";
 import AuthContext from "../../Context/AuthContext";
 import { followUserApi, unFollowUserApi } from "../../Adapters/UserApi";
+import SmallProfile from "../SmallProfile";
 
-export default function SmallProfile(props) {
+export default function SmallFollowProfile(props) {
     let [follow, setFollow] = useState(false);
     const {user} = useContext(AuthContext);
 
@@ -39,17 +40,7 @@ export default function SmallProfile(props) {
 
     return (
         <div className={Style.main}>
-            <div className={Style.profileHolder}>
-                <div
-                    className={Style.profile}
-                    style={{ background: (props.profilepicture == null)?`url(${defaultProfile})`:`url(http://localhost:4000/Profile/${props.profilepicture})`}}
-                ></div>
-            </div>
-            <div className={Style.content}>
-                <h3>{props.name}</h3>
-                <p className={Style.username}> @{props.username}</p>
-                {/* <p>Test</p> */}
-            </div>
+            <SmallProfile {...props}/>
             <div className={Style.followHolder}>
                 {(follow) ? (
                         <Button onClick={unFollowUser} className={Style.followedBtn}>Following</Button>

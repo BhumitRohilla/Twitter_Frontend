@@ -1,0 +1,54 @@
+.holder{
+    position: relative;
+}
+
+.mainBody{
+    display: flex;
+    height: 20px;
+    gap: 20px;
+    background-color: #202327;
+    margin: 10px 0;
+    border-radius: 50px;
+    padding: 10px 10px;
+    border: 2px solid #202327 ;
+}
+
+.mainBodyActive{
+    background-color: black;
+    border: 2px solid var(--blueColor);
+}
+.mainBodyActive > svg {
+    fill: var(--blueColor);
+}
+
+.input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color:  white;
+}
+.input:focus{
+    outline: none;
+}
+
+.popUp{
+}
+
+.popUpHolder{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 5px white;
+    z-index: 100;
+    transform: translate(0px,-10px);
+    border-radius: 10px;
+}
+
+.popUpText{
+    font-size: 0.8rem;
+}
+
+.profileHolder{
+    display: flex;
+    margin-bottom: 10px;
+}

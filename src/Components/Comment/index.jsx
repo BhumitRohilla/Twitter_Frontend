@@ -3,7 +3,7 @@ import TweeterTextModel from "../TweeterTextModel/index";
 import Styles from "./index.module.css";
 import TweetInputField from "../TweetInputField/index";
 import { useContext, useEffect, useRef, useState } from "react";
-import ProfileModel from "../ProfileModel";
+import ProfileModel from "../UserProfilePicture";
 import getToken from "../../Adapters/Token";
 import AuthContext from "../../Context/AuthContext";
 import { commentSend } from "../../Adapters/Tweet";

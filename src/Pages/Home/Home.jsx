@@ -9,9 +9,10 @@ import TweetModel from "../../Components/TweetModel/index";
 import TweeterInputOptions from "../../Components/TweeterInputOptions";
 import Comment from "../../Components/Comment/index";
 import TweetInputField from "../../Components/TweetInputField";
-import ProfileModel from "../../Components/ProfileModel";
+import UserProfilePicture from "../../Components/UserProfilePicture";
 import getToken from "../../Adapters/Token";
 import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
+import SearchBar from "../../Components/SearchBar";
 const numberOfTweets = 100;
 
 export default function Home() {
@@ -234,7 +235,7 @@ export default function Home() {
                         }
                     >
                         <div className={Styles.profileHolder}>
-                            <ProfileModel className={Styles.profile}/>
+                            <UserProfilePicture className={Styles.profile}/>
                         </div>
                         <div className={Styles.mainHolder}>
                             <TweetInputField handleInput={handleInput} text={tweet} imgFile={imgFile} placeholder={"What's happening?"} removeImage={removeImage}/>
@@ -285,6 +286,7 @@ export default function Home() {
             }
             secondElement={
                 <>
+                    <SearchBar/>
                     <FollowCompnenetForSideBar key="HomeFollowSideBar"/>
                 </>
             }

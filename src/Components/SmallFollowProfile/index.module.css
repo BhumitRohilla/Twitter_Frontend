@@ -6,30 +6,6 @@
     position: relative;
 }
 
-.profileHolder{
-    width: 50px;
-    margin-right: 10px;
-}
-
-.profile{
-    width: 49px;
-    height: 49px;
-    background-size: cover !important;
-    background-position: center !important;
-    border-radius: 50%;
-}
-
-.username{
-    color: gray;
-}
-
-.content{
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    width: 100%;
-    overflow: hidden;
-}
 
 .followHolder{
     margin-left: auto;

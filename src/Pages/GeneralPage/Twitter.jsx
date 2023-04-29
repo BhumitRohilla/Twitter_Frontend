@@ -13,6 +13,5 @@ export default function Twitter({firstElement,secondElement}){
                 {secondElement}
             </div>  
         </div>
-
     )
 }

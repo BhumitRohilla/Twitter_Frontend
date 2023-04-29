@@ -6,32 +6,18 @@ import { Outlet } from 'react-router-dom'
 
 export default function Navbar(){
     let {user} = useContext(AuthContext);
-    if(user.username === undefined){
-        return (
-            <>
-                <div className='main-container'>
-                    <div className='first'>
-                        <SideBar />
-                    </div>
-                    <div className='second'>
-                        <Outlet />
-                    </div>
+    return (
+        <>
+            <div className='main-container'>
+                <div className='first'>
+                    <SideBar/>
                 </div>
-                <BottomBar/>
-            </>
-        )
-    }else{
-        return(
-            <>
-                <div className='main-container'>
-                    <div className='first'>
-                        <SideBar userName={user.username} />
-                    </div>
-                    <div className= 'second'>
-                        <Outlet />
-                    </div>
+                <div className='second'>
+                    <Outlet />
                 </div>
-            </>
-        )
-    }
+            </div>
+            { user.username===undefined && <BottomBar/>}
+        </>
+    )
+
 }

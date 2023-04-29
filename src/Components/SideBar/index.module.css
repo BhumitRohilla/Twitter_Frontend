@@ -10,23 +10,18 @@
     height: 30px;
 }
 
-.explore{
-    display: flex;
-    align-items: center;
-}
-
-.setting{
-    display: flex;
-    align-items: center;
-}
-
 .navitem{
+    text-decoration: none;
     margin: 5px;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    border-radius: 50px;
 }
 .navitem:hover{
     background-color: rgb(53, 52, 52);
-    border-radius: 50px;
 }
 
 
@@ -38,10 +33,13 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .logout{
     margin-top: auto;
+    min-height: 50px;
+    min-width: 50px;
 }
 
 
