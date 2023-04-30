@@ -11,6 +11,7 @@ export default function  Profile(){
     const data = useLoaderData();
     const {user} = useContext(AuthContext);
     console.log(data,"test");
+    console.log(data);
     return (
         <Twitter
             firstElement={<OnlyProfile userToShow={data}/>}

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import Styles from './index.module.css'
 import { searchUser } from '../../Adapters/check';
 import SmallProfile from '../SmallProfile/index'
-import LoadingDiv from '../Loading';
+import CancelableImage from '../CancelableImage';
+import Image from '../TweetImg';
+
 export default function TweetInputField(props) {
     const [controller,setController] = useState(new AbortController());
     const [divStatus,changeDivStatus] = useState(false);
@@ -66,16 +68,18 @@ export default function TweetInputField(props) {
                 {props.imgFile.map((element, index) => {
                     let url = URL.createObjectURL(element);
                     return (
-                        <div>
-                            <img className={`${Styles.tweetImage} ${props.individualImg}`} src={url} />
-                            <button
-                                onClick={() => {
-                                    props.removeImage(index);
-                                }}
-                            >
-                                X
-                            </button>
-                        </div>
+                        < CancelableImage handleClose={()=>props.removeImage(index)} className={`${Styles.tweetImage} ${props.individualImg}`} src={url}  />
+                        // <div>
+                            
+                        //     <Image className={`${Styles.tweetImage} ${props.individualImg}`} src={url}  />
+                        //     <button
+                        //         onClick={() => {
+                        //             props.removeImage(index);
+                        //         }}
+                        //     >
+                        //         X
+                        //     </button>
+                        // </div>
                     );
                 })}
             </div>

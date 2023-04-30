@@ -23,14 +23,22 @@
     background-size: cover !important;
     border-radius: 50%;
     background-position: center !important;
+    cursor: pointer;
 }
 
 .content{
     width: 100%;
 }
 
+.userDetails{
+    font-size: 16px;
+    font-weight: 300;
+}
+
 .userId{
     font-size: 14px;
+    font-weight: 200;
+    color:  gray;
 }
 
 .comment{
@@ -38,4 +46,8 @@
     right: 10px;
     font-size: 14px;
     color: var(--blueColor);
+}
+
+.tweetImage{
+    width: 100%;
 }

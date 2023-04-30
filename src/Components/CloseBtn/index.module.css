@@ -1,0 +1,16 @@
+.firstDiv{
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background-color: white;
+    transform: rotate(45deg) ;
+}
+
+.secondDiv{
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background-color: white;
+    transform: rotate(-45deg);
+}
+

@@ -10,7 +10,12 @@ import {
     getTweetsOfUser,
 } from "../../Adapters/ProfileApi";
 import defaultProfile from "/twitterPicture.jpg";
-import { checkAllUserTweets } from "../../Adapters/UserApi";
+import {
+    checkAllUserTweets,
+    followUserApi,
+    getFollowStatus,
+    unFollowUserApi,
+} from "../../Adapters/UserApi";
 import ModelOpen from "../../Context/OpenModel";
 import Comment from "../Comment/index";
 import Steps from "./step1";
@@ -23,10 +28,44 @@ export default function OnlyProfile({ userToShow }) {
     const [comment, setComment] = useState([]);
     const [likes, setLikedTweet] = useState([]);
 
-    const [loading,setLoadingStatus] = useState(true);
-
+    const [loading, setLoadingStatus] = useState(true);
     const [commentModel, setCommentModel] = useState(false);
     const [tweetToComment, setTweetToComment] = useState(null);
+
+    const [following, changeFollowStatus] = useState(false);
+
+    const [followrs, setFollower] = useState(parseInt(userToShow.follows)); 
+
+    useEffect(() => {
+        getToken(user.token)
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    console.log(newUser);
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+                getFollowStatus(userToShow.u_id, token)
+                    .then((res) => {
+                        if (res === true) {
+                            changeFollowStatus(true);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
+    }, [userToShow.u_id]);
+
     function handleCommentPress(tweet) {
         if (user.u_id !== undefined) {
             setCommentModel(true);
@@ -37,6 +76,73 @@ export default function OnlyProfile({ userToShow }) {
     }
     function handleRetweetPress() {
         console.log("Retweet");
+    }
+
+    function followUser() {
+        getToken(user.token)
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    console.log(newUser);
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+                followUserApi(userToShow.u_id, user.token)
+                    .then((result) => {
+                        if (result === true) {
+                            changeFollowStatus(true);
+                            setFollower(followrs+1);
+                        } else {
+                            //TODO:: remove alert;
+                            alert("Sever error occure");
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
+    }
+
+    function unFollowUser() {
+        getToken(user.token)
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    console.log(newUser);
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+                unFollowUserApi(userToShow.u_id, user.token)
+                    .then((result) => {
+                        if (result === true) {
+                            changeFollowStatus(false);
+                            setFollower(followrs-1);
+                        } else {
+                            alert("Sever error occure");
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
     }
 
     useEffect(() => {
@@ -51,9 +157,9 @@ export default function OnlyProfile({ userToShow }) {
                     //TODO: remove alert
                     alert("Server error occures");
                 })
-                .finally(()=>{
+                .finally(() => {
                     setLoadingStatus(false);
-                })
+                });
         } else {
             setLoadingStatus(true);
             getToken(user.token)
@@ -77,9 +183,9 @@ export default function OnlyProfile({ userToShow }) {
                             //TODO: remove alert
                             alert("Server error occures");
                         })
-                        .finally(()=>{
+                        .finally(() => {
                             setLoadingStatus(false);
-                        })
+                        });
 
                     getCommentOfUser(userToShow.u_id, token)
                         .then((data) => {
@@ -155,7 +261,30 @@ export default function OnlyProfile({ userToShow }) {
                                 : { background: `url(${defaultProfile})` }
                         }
                     ></div>
-                    <Button className={Styles.followBtn}>Follow</Button>
+                    {userToShow.u_id !== user.u_id ? (
+                        following ? (
+                            <Button
+                                onClick={() => unFollowUser()}
+                                className={`${Styles.btnProfile} ${Styles.followingBtn}`}
+                            >
+                                Following
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={() => followUser()}
+                                className={`${Styles.btnProfile} ${Styles.followBtn}`}
+                            >
+                                Follow
+                            </Button>
+                        )
+                    ) : (
+                        <Button
+                            onClick={() => openEditProfile()}
+                            className={`${Styles.btnProfile} ${Styles.editProfileBtn}`}
+                        >
+                            Edit Profile
+                        </Button>
+                    )}
                 </div>
                 <div>
                     <h2 className={Styles.nameTitle}>{userToShow.name}</h2>
@@ -165,10 +294,12 @@ export default function OnlyProfile({ userToShow }) {
                     <div></div>
                     <p className={Styles.followTitle}>
                         <span className={Styles.whiteText}>
-                            {user.following}
+                            {userToShow.following}
                         </span>{" "}
                         Following &nbsp; &nbsp;{" "}
-                        <span className={Styles.whiteText}>{user.follows}</span>{" "}
+                        <span className={Styles.whiteText}>
+                            {followrs}
+                        </span>{" "}
                         Followers
                     </p>
                 </div>
@@ -192,7 +323,6 @@ export default function OnlyProfile({ userToShow }) {
                 </button>
             </div>
             <div>
-
                 {step === 1 && (
                     <Steps
                         tweet={tweet}

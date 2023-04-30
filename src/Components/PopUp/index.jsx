@@ -1,6 +1,6 @@
 import React from "react";
 import Styles from './index.module.css'
-
+import CloseBtn from "../CloseBtn";
 
 export default function PopUp({isOpen,children,handleClose,footer,header}){
     
@@ -18,7 +18,7 @@ export default function PopUp({isOpen,children,handleClose,footer,header}){
                 </div>  
                 <div className={Styles.main}>
                     <div className={Styles.header}>
-                        <button title="Close" className={Styles.close} onClick={close}><div className={Styles.firstDiv}></div><div className={Styles.secondDiv}></div></button>
+                        <button title="Close" className={Styles.close} onClick={close}><CloseBtn/></button>
                         {header}
                     </div>
                     <div className={Styles.content}>

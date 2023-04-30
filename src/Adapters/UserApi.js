@@ -203,6 +203,24 @@ export function searchUsers(username,signal){
     })
 }
 
+export function getFollowStatus(userToCheck,token){
+    return fetch(`http://localhost:4000/user/checkFollowStatus/${userToCheck}`,{
+        headers:{
+            'Authorization': 'Bearer '+token
+        }
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        return data.result;
+    })
+}
+
 export function checkAllUserTweets(u_id){
     return fetch(`http://localhost:4000/check/getAllTweetsOfUser/${u_id}`)
     .then((res)=>{

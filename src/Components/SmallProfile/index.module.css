@@ -22,3 +22,8 @@
     width: 100%;
     overflow: hidden;
 }
+
+
+.profile{
+    cursor: pointer;
+}

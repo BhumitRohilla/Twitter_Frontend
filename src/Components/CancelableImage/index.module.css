@@ -1,0 +1,27 @@
+.main{
+    position: relative;
+}
+
+.closeBtn{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.closeBtn:hover{
+    background-color: rgb(54, 54, 54);
+}
+
+.closeBtn:active{
+    background-color: black;
+}

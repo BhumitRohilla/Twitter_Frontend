@@ -83,10 +83,15 @@
     color: white;
     font-weight: 600;
     padding: 0px 20px;
+    transition: 0.2s all linear;
 }
 
 .tweetBtn:hover{
-    background-color: blue;
+    background-color: rgb(59, 59, 197);
+}
+
+.tweetBtn:active{
+    background-color: rgb(45, 45, 163); ;
 }
 
 .imageHolder{

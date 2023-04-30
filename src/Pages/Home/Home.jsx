@@ -32,9 +32,8 @@ export default function Home() {
     const [commentModel, setCommentModel] = useState(false);
     const [tweetToComment, setTweetToComment] = useState(null);
 
-
     //loading
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     function handleInput(ev) {
         changeTweet(ev.target.value);
@@ -75,9 +74,9 @@ export default function Home() {
         console.log(tweet);
     }
 
-    function handleCommentData(tweet){
+    function handleCommentData(tweet) {
         console.log(tweet);
-        setFollowTweets( [tweet,...followTweets]);
+        setFollowTweets([tweet, ...followTweets]);
     }
 
     useEffect(() => {
@@ -119,7 +118,6 @@ export default function Home() {
                             changeLength([...newLength]);
                         } else {
                         }
-                        console.log(data);
                     })
                     .catch((err) => {
                         console.log(err);
@@ -203,123 +201,115 @@ export default function Home() {
     }
 
     function firstElement() {
-        if (loading) {
-            return (
-                <LoadingDiv/>
-            )
-        } else {
-            return (
-                <>
-                    <div className={Styles.header}>
-                        <div className={Styles.headerTitleContainer}>
-                            <h3 className={Styles.headerTitle}>Home</h3>
-                        </div>
-                        <div className={Styles.buttonCluster}>
-                            <div
-                                onClick={() => {
-                                    currentView != "For You" &&
-                                        changeView("For You");
-                                }}
-                                className={
-                                    `${Styles.topButton} ` +
-                                    (currentView === "For You"
-                                        ? Styles.currentView
-                                        : "")
-                                }
-                            >
-                                <p>For You</p>
-                            </div>
-                            <div
-                                onClick={() => {
-                                    currentView != "Following" &&
-                                        changeView("Following");
-                                }}
-                                className={
-                                    `${Styles.topButton} ` +
-                                    (currentView === "Following"
-                                        ? Styles.currentView
-                                        : "")
-                                }
-                            >
-                                <p>Following</p>
-                            </div>
-                        </div>
+        return (
+            <>
+                <div className={Styles.header}>
+                    <div className={Styles.headerTitleContainer}>
+                        <h3 className={Styles.headerTitle}>Home</h3>
                     </div>
-                    <div
-                        className={
-                            `${Styles.tweetCreation} ` +
-                            (sending ? Styles.sending : "")
-                        }
-                    >
-                        <div className={Styles.profileHolder}>
-                            <UserProfilePicture className={Styles.profile} />
-                        </div>
-                        <div className={Styles.mainHolder}>
-                            <TweetInputField
-                                handleInput={handleInput}
-                                text={tweet}
-                                imgFile={imgFile}
-                                placeholder={"What's happening?"}
-                                removeImage={removeImage}
-                                addToInput={addToInput}
-                            />
-                            <div className={Styles.tweeterTweet}>
-                                <TweeterInputOptions
-                                    className={Styles.tweetAddon}
-                                    addEmoji={addEmoji}
-                                    changeImgFile={changeImgFile}
-                                    showEmoji={showEmoji}
-                                    changeShowEmoji={changeShowEmoji}
-                                    handleFile={handleFile}
-                                />
-                                <div>
-                                    <Button
-                                        className={Styles.tweetBtn}
-                                        onClick={submit}
-                                    >
-                                        Tweet
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        {currentView === "Following" ? (
-                            <>
-                                {followTweets.map((element) => {
-                                    return (
-                                        <TweetModel
-                                            key={element.t_id}
-                                            tweet={element}
-                                            handleCommentPress={
-                                                handleCommentPress
-                                            }
-                                            handleRetweetPress={
-                                                handleRetweetPress
-                                            }
-                                            className={Styles.tweetHolder}
-                                        />
-                                    );
-                                })}
-                            </>
-                        ) : (
-                            <>test</>
-                        )}
-                    </div>
-                    <div>
-                        <Comment
-                            tweet={tweetToComment}
-                            isOpen={commentModel}
-                            handleClose={() => {
-                                setCommentModel(false);
-                                setTweetToComment(null);
+                    <div className={Styles.buttonCluster}>
+                        <div
+                            onClick={() => {
+                                currentView != "For You" &&
+                                    changeView("For You");
                             }}
-                            handleCommentData={handleCommentData}
-                        />
+                            className={
+                                `${Styles.topButton} ` +
+                                (currentView === "For You"
+                                    ? Styles.currentView
+                                    : "")
+                            }
+                        >
+                            <p>For You</p>
+                        </div>
+                        <div
+                            onClick={() => {
+                                currentView != "Following" &&
+                                    changeView("Following");
+                            }}
+                            className={
+                                `${Styles.topButton} ` +
+                                (currentView === "Following"
+                                    ? Styles.currentView
+                                    : "")
+                            }
+                        >
+                            <p>Following</p>
+                        </div>
                     </div>
-                </>
-            );
-        }
+                </div>
+
+                <div
+                    className={
+                        `${Styles.tweetCreation} ` +
+                        (sending ? Styles.sending : "")
+                    }
+                >
+                    <div className={Styles.profileHolder}>
+                        <UserProfilePicture className={Styles.profile} />
+                    </div>
+                    <div className={Styles.mainHolder}>
+                        <TweetInputField
+                            handleInput={handleInput}
+                            text={tweet}
+                            imgFile={imgFile}
+                            placeholder={"What's happening?"}
+                            removeImage={removeImage}
+                            addToInput={addToInput}
+                        />
+                        <div className={Styles.tweeterTweet}>
+                            <TweeterInputOptions
+                                className={Styles.tweetAddon}
+                                addEmoji={addEmoji}
+                                changeImgFile={changeImgFile}
+                                showEmoji={showEmoji}
+                                changeShowEmoji={changeShowEmoji}
+                                handleFile={handleFile}
+                            />
+                            <div>
+                                <Button
+                                    className={Styles.tweetBtn}
+                                    onClick={submit}
+                                >
+                                    Tweet
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                {loading?<LoadingDiv/> :(
+                    currentView === "Following" ? (
+                        <>
+                            {followTweets.map((element) => {
+                                return (
+                                    <TweetModel
+                                        key={element.t_id}
+                                        tweet={element}
+                                        handleCommentPress={handleCommentPress}
+                                        handleRetweetPress={handleRetweetPress}
+                                        className={Styles.tweetHolder}
+                                    />
+                                );
+                            })}
+                        </>
+                    ) : (
+                        <>test</>
+                    ))}
+                </div>
+                <div>
+                    <Comment
+                        tweet={tweetToComment}
+                        isOpen={commentModel}
+                        handleClose={() => {
+                            setCommentModel(false);
+                            setTweetToComment(null);
+                        }}
+                        handleCommentData={handleCommentData}
+                    />
+                </div>
+            </>
+        );
     }
 
     return (
