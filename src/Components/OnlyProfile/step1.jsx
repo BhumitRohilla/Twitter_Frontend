@@ -1,3 +1,4 @@
+import LoadingDiv from "../Loading";
 import TweetModel from "../TweetModel";
 
 export default function Steps({
@@ -5,6 +6,7 @@ export default function Steps({
     setTweet,
     handleCommentPress,
     handleRetweetPress,
+    loading
 }) {
 
     function handleLikePress(t_id,status){
@@ -16,6 +18,13 @@ export default function Steps({
         })
         setTweet(newArray);
     }
+
+    if(loading){
+        return (
+            <LoadingDiv/>
+        )
+    }
+
     return (
         <>
             {tweet.map((element) => {

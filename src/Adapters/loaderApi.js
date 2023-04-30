@@ -13,3 +13,22 @@ export function loadProfile(u_id){
         return data.profile;
     })
 }
+
+export  function loadTweet(t_id,token){
+    return fetch(`http://localhost:4000/tweet/getSingleTweet/${t_id}`,{
+        headers:{
+            'authorization' : 'Bearer '+token
+        }
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        console.log(data);
+        return data.result;
+    })
+}

@@ -9,10 +9,13 @@ export function commentSend(data,token){
     })
     .then((res)=>{
         if(res.status === 200){
-            return true;
+            return res.json();
         }else{
             return false;
         }
+    })
+    .then((data)=>{
+        return data.result;
     })
     .catch((err)=>{
         console.log(err);
@@ -56,5 +59,23 @@ export function getTweets(type,{start,length},token){
     })
     .then((data)=>{
         return data;
+    })
+}
+
+export function getCommentTweet(t_id,token){
+    return fetch(`http://localhost:4000/tweet/getCommentTweet/${t_id}`,{
+        headers:{
+            'Authorization': 'Bearer ' + token,
+        }
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status)
+        }
+    })
+    .then((data)=>{
+        return data.result;
     })
 }

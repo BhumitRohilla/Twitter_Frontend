@@ -4,6 +4,7 @@ import FloaterDiv from "../FloaterElement";
 import { searchUsers } from "../../Adapters/UserApi";
 import SmallProfile from "../SmallProfile/index";
 import { useNavigate } from "react-router-dom";
+import LoadingDiv from "../Loading";
 
 export default function SearchBar() {
     const [focusStatus, changeFocusStatus] = useState(false);
@@ -24,7 +25,6 @@ export default function SearchBar() {
                 })
                 .catch((err) => {
                     console.log(err);
-                    setLoading(false);
                 });
             return () => {
                 controller.abort();
@@ -44,7 +44,7 @@ export default function SearchBar() {
         } else {
             //TODO: Improve This
             if (loading) {
-                return <p>Loading</p>;
+                return <LoadingDiv/>
             }
             if (APIdata.length === 0) {
                 return <p>No Data Found</p>;

@@ -4,6 +4,7 @@ import {
     createRoutesFromElements,
     Route,
     RouterProvider,
+    useNavigate,
 } from "react-router-dom";
 import AuthContext from "./Context/AuthContext";
 import Navbar from "./Components/Navbar/index";
@@ -17,8 +18,10 @@ import TweetPopUpModel from "./Components/TweetPopUpModel";
 //twitter
 import twitterIcon from "/twitter.png";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import { loadProfile } from "./Adapters/loaderApi";
+import { loadProfile, loadTweet } from "./Adapters/loaderApi";
 import Profile from "./Pages/Profile/Profile";
+import Tweet from "./Pages/TweetPage/Tweet";
+import getToken from "./Adapters/Token";
 
 function App() {
     //useState
@@ -26,6 +29,7 @@ function App() {
     const [login, setLogin] = useState(false);
     const [register, setReg] = useState(false);
     const [loading, setLoading] = useState(true);
+
     //useEffect
     useEffect(() => {
         refreshApi()
@@ -72,15 +76,48 @@ function App() {
                     path="profile/:u_id"
                     loader={({ params }) => {
                         return loadProfile(params.u_id)
-                        .then((data)=>{
-                            return data;
-                        })
-                        .catch((err)=>{
-                            console.log(err);
-                            return null;
-                        })
+                            .then((data) => {
+                                return data;
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                return null;
+                            });
                     }}
-                    element={<Profile/>}
+                    element={<Profile />}
+                />
+                <Route
+                    path="tweet/:t_id"
+                    loader={({ params }) => {
+                        return getToken(user.token)
+                            .then((token) => {
+                                if (token.newToken !== undefined) {
+                                    let newUser = { ...user };
+                                    setUser({ user }, "OldUser");
+                                    newUser.token = token.newToken;
+                                    setUser({ ...newUser });
+                                    token = token.newToken;
+                                } else {
+                                    token = token.oldToken;
+                                }
+                                return loadTweet(params.t_id,token)
+                                    .then((data) => {
+                                        console.log(data);
+                                        return data;
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                        return null;
+                                    });
+                            })
+                            .catch((err) => {
+                                if (err.message == 401) {
+                                    setUser({});
+                                }
+                                return null;
+                            });
+                    }}
+                    element={<ProtectedRoute element={<Tweet />} />}
                 />
             </Route>
         )

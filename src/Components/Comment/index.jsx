@@ -96,10 +96,8 @@ export default function Comment(props) {
             }
             commentSend(data,token)
             .then((res)=>{
-                if(res === true){
-                }else{
-                    //TODO: remove alert from here
-                    alert("Some error occure");
+                if(props.handleCommentData !== undefined){
+                    props.handleCommentData(res);
                 }
             })
         })

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Styles from './index.module.css'
 import { searchUser } from '../../Adapters/check';
 import SmallProfile from '../SmallProfile/index'
+import LoadingDiv from '../Loading';
 export default function TweetInputField(props) {
     const [controller,setController] = useState(new AbortController());
     const [divStatus,changeDivStatus] = useState(false);
@@ -35,6 +36,7 @@ export default function TweetInputField(props) {
         setController(new AbortController());
         props.handleInput(ev);
     }
+
 
     return (
         <>

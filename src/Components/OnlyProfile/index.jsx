@@ -13,7 +13,7 @@ import defaultProfile from "/twitterPicture.jpg";
 import { checkAllUserTweets } from "../../Adapters/UserApi";
 import ModelOpen from "../../Context/OpenModel";
 import Comment from "../Comment/index";
-import Steps from "../TweetModel/step1";
+import Steps from "./step1";
 
 export default function OnlyProfile({ userToShow }) {
     const [step, changeStep] = useState(1);
@@ -22,6 +22,8 @@ export default function OnlyProfile({ userToShow }) {
     const [tweet, setTweet] = useState([]);
     const [comment, setComment] = useState([]);
     const [likes, setLikedTweet] = useState([]);
+
+    const [loading,setLoadingStatus] = useState(true);
 
     const [commentModel, setCommentModel] = useState(false);
     const [tweetToComment, setTweetToComment] = useState(null);
@@ -38,6 +40,7 @@ export default function OnlyProfile({ userToShow }) {
     }
 
     useEffect(() => {
+        setLoadingStatus(true);
         if (user.token === undefined) {
             checkAllUserTweets(userToShow.u_id)
                 .then((data) => {
@@ -47,8 +50,12 @@ export default function OnlyProfile({ userToShow }) {
                     console.log(err);
                     //TODO: remove alert
                     alert("Server error occures");
-                });
+                })
+                .finally(()=>{
+                    setLoadingStatus(false);
+                })
         } else {
+            setLoadingStatus(true);
             getToken(user.token)
                 .then((token) => {
                     if (token.newToken !== undefined) {
@@ -69,7 +76,10 @@ export default function OnlyProfile({ userToShow }) {
                             console.log(err);
                             //TODO: remove alert
                             alert("Server error occures");
-                        });
+                        })
+                        .finally(()=>{
+                            setLoadingStatus(false);
+                        })
 
                     getCommentOfUser(userToShow.u_id, token)
                         .then((data) => {
@@ -182,10 +192,12 @@ export default function OnlyProfile({ userToShow }) {
                 </button>
             </div>
             <div>
+
                 {step === 1 && (
                     <Steps
                         tweet={tweet}
                         setTweet={setTweet}
+                        loading={loading}
                         handleCommentPress={handleCommentPress}
                         handleRetweetPress={handleRetweetPress}
                     />
@@ -195,6 +207,7 @@ export default function OnlyProfile({ userToShow }) {
                         <Steps
                             tweet={comment}
                             setTweet={setComment}
+                            loading={loading}
                             handleCommentPress={handleCommentPress}
                             handleRetweetPress={handleRetweetPress}
                         />
@@ -205,6 +218,7 @@ export default function OnlyProfile({ userToShow }) {
                         <Steps
                             tweet={likes}
                             setTweet={setLikedTweet}
+                            loading={loading}
                             handleCommentPress={handleCommentPress}
                             handleRetweetPress={handleRetweetPress}
                         />

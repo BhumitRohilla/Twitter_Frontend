@@ -13,6 +13,7 @@ import UserProfilePicture from "../../Components/UserProfilePicture";
 import getToken from "../../Adapters/Token";
 import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
 import SearchBar from "../../Components/SearchBar";
+import LoadingDiv from "../../Components/Loading";
 const numberOfTweets = 100;
 
 export default function Home() {
@@ -30,6 +31,10 @@ export default function Home() {
     //
     const [commentModel, setCommentModel] = useState(false);
     const [tweetToComment, setTweetToComment] = useState(null);
+
+
+    //loading
+    const [loading,setLoading] = useState(true);
 
     function handleInput(ev) {
         changeTweet(ev.target.value);
@@ -70,6 +75,11 @@ export default function Home() {
         console.log(tweet);
     }
 
+    function handleCommentData(tweet){
+        console.log(tweet);
+        setFollowTweets( [tweet,...followTweets]);
+    }
+
     useEffect(() => {
         let type;
         let start = length;
@@ -88,6 +98,7 @@ export default function Home() {
 
         getToken(user.token)
             .then((token) => {
+                setLoading(true);
                 if (token.newToken !== undefined) {
                     let newUser = { ...user };
                     setUser({ user }, "OldUser");
@@ -100,6 +111,7 @@ export default function Home() {
                 }
                 getTweets(type, { start, length: numberOfTweets }, token)
                     .then((data) => {
+                        setLoading(false);
                         if (type === "follow") {
                             setFollowTweets([...followTweets, ...data]);
                             let newLength = length;
@@ -127,7 +139,6 @@ export default function Home() {
 
     function submit() {
         //checks;
-
         if (tweet.trim() === "") {
             return;
         }
@@ -139,16 +150,12 @@ export default function Home() {
         imgFile.forEach((file) => {
             data.append("tweetImg", file);
         });
-
-        console.log(data);
-
         getToken(user.token)
             .then((token) => {
                 if (token.newToken !== undefined) {
                     let newUser = { ...user };
                     setUser({ user }, "OldUser");
                     newUser.token = token.newToken;
-                    console.log(newUser);
                     setUser({ ...newUser });
                     token = token.newToken;
                 } else {
@@ -187,17 +194,21 @@ export default function Home() {
         changeImgFile(newImageArray);
     }
 
-    function addToInput(username){
-        let newString = tweet.split([' ']);
+    function addToInput(username) {
+        let newString = tweet.split([" "]);
         newString.pop();
         newString.push(`@${username} `);
-        newString = newString.join(' ');
+        newString = newString.join(" ");
         changeTweet(newString);
     }
 
-    return (
-        <Twitter
-            firstElement={
+    function firstElement() {
+        if (loading) {
+            return (
+                <LoadingDiv/>
+            )
+        } else {
+            return (
                 <>
                     <div className={Styles.header}>
                         <div className={Styles.headerTitleContainer}>
@@ -250,7 +261,7 @@ export default function Home() {
                                 imgFile={imgFile}
                                 placeholder={"What's happening?"}
                                 removeImage={removeImage}
-                                addToInput = {addToInput}
+                                addToInput={addToInput}
                             />
                             <div className={Styles.tweeterTweet}>
                                 <TweeterInputOptions
@@ -303,10 +314,17 @@ export default function Home() {
                                 setCommentModel(false);
                                 setTweetToComment(null);
                             }}
+                            handleCommentData={handleCommentData}
                         />
                     </div>
                 </>
-            }
+            );
+        }
+    }
+
+    return (
+        <Twitter
+            firstElement={firstElement()}
             secondElement={
                 <>
                     <SearchBar />
