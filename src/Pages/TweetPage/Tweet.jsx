@@ -60,7 +60,7 @@ export default function Tweets() {
                 }
                 return null;
             });
-    }, []);
+    }, [tweetToShow]);
     return (
         <Twitter
             firstElement={
