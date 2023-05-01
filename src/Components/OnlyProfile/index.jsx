@@ -45,6 +45,7 @@ export default function OnlyProfile({ userToShow }) {
     const [editProfileStatus, setEditProfileStatus] = useState(false);
     const [headerInputFile, setHeaderInputFile] = useState(null);
     const [profileInputFile, setProfileInputFile] = useState(null);
+    const [saving,setSaving] = useState(false);
     const [headerImg, setHeaderImg] = useState(
         userToShow.headerpicture
             ? `http://localhost:4000/Header/${userToShow.headerpicture}`
@@ -83,6 +84,7 @@ export default function OnlyProfile({ userToShow }) {
         data.append("bio", bio);
         data.append("headerImg", headerInputFile);
         data.append("profileImg", profileInputFile);
+        setSaving(true);
         getToken(user.token)
             .then((token) => {
                 if (token.newToken !== undefined) {
@@ -120,12 +122,14 @@ export default function OnlyProfile({ userToShow }) {
                         userToShow.name = data.name;
                         userToShow.bio = data.bio;
                         setUser(newUser);
+                        setSaving(false);
                     });
             })
             .catch((err) => {
                 if (err.message == 401) {
                     setUser({});
                 }
+                setSaving(false);
             });
     }
 
@@ -481,6 +485,7 @@ export default function OnlyProfile({ userToShow }) {
                 setHeaderInputFile={setHeaderInputFile}
                 setProfileInputFile={setProfileInputFile}
                 submit={handleSubmitEditProfile}
+                loading = {saving}
             />
         </>
     );

@@ -6,10 +6,12 @@ import { useState } from "react";
 import camera from "../../assets/camera.svg";
 import cross from "../../assets/cross.svg";
 import { useRef } from "react";
+import LoadingDiv from "../Loading";
 
 export default function EditProfilePopUp(props) {
     const profileInput = useRef(null);
     const headerInput = useRef(null);
+    const [err, setError] = useState("");
 
     function onPressHeaderInput() {
         headerInput.current.click();
@@ -34,6 +36,14 @@ export default function EditProfilePopUp(props) {
         props.setProfileImg(URL.createObjectURL(profileInput.current.files[0]));
     }
 
+    function submit() {
+        if (props.name.trim() === "") {
+            setError("Name should not be empty");
+        } else {
+            props.submit();
+        }
+    }
+
     return (
         <PopUp
             isOpen={props.isOpen}
@@ -41,9 +51,15 @@ export default function EditProfilePopUp(props) {
             header={
                 <>
                     <h3>Edit Profile</h3>
-                    <Button onClick={props.submit} className={Styles.sendBtn}>
-                        Send
-                    </Button>
+                    {props.loading === true ? (
+                        <div className={Styles.sendBtn}>
+                        <LoadingDiv />
+                        </div>
+                    ) : (
+                        <Button onClick={submit} className={Styles.sendBtn}>
+                            Send
+                        </Button>
+                    )}
                 </>
             }
             childClass={Styles.mainBody}
@@ -104,7 +120,9 @@ export default function EditProfilePopUp(props) {
                         value={props.name}
                         onChange={(value) => {
                             props.setName(value);
+                            setError("");
                         }}
+                        err={err}
                         label={"Name"}
                     />
                     <Input
