@@ -14,6 +14,7 @@ import getToken from "../../Adapters/Token";
 import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
 import SearchBar from "../../Components/SearchBar";
 import LoadingDiv from "../../Components/Loading";
+import { useNavigate } from "react-router-dom";
 const numberOfTweets = 100;
 
 export default function Home() {
@@ -34,6 +35,12 @@ export default function Home() {
 
     //loading
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
+    function sideBarOnClick(element){
+        return ()=>navigate(`/profile/${element.u_id}`)
+    }
+
 
     function handleInput(ev) {
         changeTweet(ev.target.value);
@@ -317,7 +324,7 @@ export default function Home() {
             firstElement={firstElement()}
             secondElement={
                 <>
-                    <SearchBar />
+                    <SearchBar onClick={sideBarOnClick} />
                     <FollowCompnenetForSideBar key="FollowSideBar" />
                 </>
             }

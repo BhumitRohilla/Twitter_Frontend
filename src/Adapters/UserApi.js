@@ -255,3 +255,22 @@ export function updateUser(data,token){
         return false;
     })
 }
+
+
+export default function getNotification(token){
+    return fetch(`http://localhost:4000/user/getNotifications`,{
+        headers:{
+            'Authorization': 'Bearer '+token
+        },
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        return data.result;
+    })
+}

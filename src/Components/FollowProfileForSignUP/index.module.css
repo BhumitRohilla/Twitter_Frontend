@@ -1,0 +1,30 @@
+.main{
+    display: flex;
+    box-sizing: border-box;
+    padding: 15px 5px;
+    width: 100%;
+    position: relative;
+}
+
+
+.followHolder{
+    margin-left: auto;
+    align-self: center;
+    position: absolute;
+    right: 10px;
+}
+
+.followBtn{
+    padding: 4px 15px;
+    font-size: 1rem;
+}
+
+
+.followedBtn{
+    background-color: var(--blueColor);
+    padding: 4px 15px;
+    font-size: 1rem;
+    color: white;
+}
+
+

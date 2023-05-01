@@ -4,9 +4,8 @@ import UserProfilePicture from '../UserProfilePicture';
 export default function LogoutBtn(){
     return (
         <>
-            <div className={Styles.mainBtn}>
-                <UserProfilePicture className={Styles.profile}/>
-            </div>
+            <UserProfilePicture className={Styles.profile}/>
+            
             <p className='navbarText'>Logout</p>
         </>
     )

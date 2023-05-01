@@ -10,7 +10,7 @@ import AuthContext from '../../Context/AuthContext';
 import TwitterIcon from '../../assets/twitterIcon'
 import defaultPicture from '/twitterPicture.jpg';
 import { changeProfile, checkIfUsernameAvailable, getListOfUser, updateUsername } from "../../Adapters/UserApi";
-import SmallProfile from "../SmallFollowProfile";
+import SmallProfile from "../FollowProfileForSignUP/index";
 
 export default function SignupPopUp(props){
     const [err,setError] = useState('');

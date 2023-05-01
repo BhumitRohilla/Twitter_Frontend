@@ -6,14 +6,14 @@ import SmallProfile from "../SmallProfile/index";
 import { useNavigate } from "react-router-dom";
 import LoadingDiv from "../Loading";
 
-export default function SearchBar() {
+export default function SearchBar(props) {
     const [focusStatus, changeFocusStatus] = useState(false);
     const inputRef = useRef(null);
     const [input, changeInput] = useState("");
     const [APIdata, setAPIdata] = useState([]);
     const [controller, changeController] = useState(new AbortController());
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (input.trim() !== "") {
@@ -32,7 +32,7 @@ export default function SearchBar() {
         }
     }, [input]);
 
-    function getPopUpValues() {
+    function getPopUpValues(props) {
         if (input.trim() === "") {
             return (
                 <div className={Styles.popUp}>
@@ -43,6 +43,7 @@ export default function SearchBar() {
             );
         } else {
             //TODO: Improve This
+            
             if (loading) {
                 return <LoadingDiv/>
             }
@@ -50,8 +51,9 @@ export default function SearchBar() {
                 return <p>No Data Found</p>;
             }
             return APIdata.map((element) => {
+                
                 return (
-                    <div  onClick={()=>navigate(`/profile/${element.u_id}`)} className={Styles.profileHolder}>
+                    <div onClick={props.onClick(element)} className={Styles.profileHolder}>
                         <SmallProfile {...element} />
                     </div>
                 );
@@ -75,10 +77,10 @@ export default function SearchBar() {
         <FloaterDiv
             className={Styles.holder}
             popUpStatus={focusStatus}
-            popUp={getPopUpValues()}
+            popUp={getPopUpValues(props)}
             popupClassName={Styles.popUpHolder}
         >
-            <div
+            <div ref={props.inputRef}
                 onClick={() => {
                     changeFocusStatus(true);
                     inputRef.current.focus();

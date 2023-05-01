@@ -1,0 +1,38 @@
+.mainSection{
+    display: flex;
+    gap:10px;
+    width: 100%;
+}
+
+.container{
+    height: 100vh;
+    box-sizing: border-box;
+    border-left : 1px solid var(--borderColor);
+    border-right: 1px solid var(--borderColor);
+    flex: 1 1 600px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.sideBar{
+    flex: 1 1 350px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow: scroll;
+}
+
+
+@media only screen and (max-width: 700px) {
+    .sideBar{
+        display: none;
+    }
+    
+}
+
+@media only screen and (max-width: 685px) {
+    .container{
+        width: 100%;
+        flex:none;
+    }
+}

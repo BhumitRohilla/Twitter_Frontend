@@ -1,7 +1,7 @@
 import Twitter from "../GeneralPage/Twitter";
 import SearchBar from "../../Components/SearchBar";
 import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import LoadingDiv from "../../Components/Loading";
 import MainTweet from "./MainTweet";
@@ -34,6 +34,11 @@ export default function Tweets() {
     function handleRetweetPress() {
         console.log("comment pressed");
     }
+
+    function sidebarOnClick(element){
+        return ()=>navigate(`/profile/${element.u_id}`)
+    }
+
 
     useEffect(() => {
         setLoading(true);
@@ -105,7 +110,7 @@ export default function Tweets() {
             }
             secondElement={
                 <>
-                    <SearchBar />
+                    <SearchBar onClick={sidebarOnClick}/>
                     <FollowCompnenetForSideBar key="FollowSideBar" />
                 </>
             }

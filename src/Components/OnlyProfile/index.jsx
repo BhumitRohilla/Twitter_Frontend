@@ -65,12 +65,12 @@ export default function OnlyProfile({ userToShow }) {
         setProfileInputFile(null);
         setHeaderImg(
             userToShow.headerpicture
-                ? `http://localhost:4000/${userToShow.headerpicture}`
+                ? `http://localhost:4000/Header/${userToShow.headerpicture}`
                 : null
         );
         setProfileImg(
             userToShow.profilepicture
-                ? `http://localhost:4000/${userToShow.profilepicture}`
+                ? `http://localhost:4000/Profile/${userToShow.profilepicture}`
                 : `${defaultProfile}`
         );
         setName(userToShow.name);
@@ -84,6 +84,11 @@ export default function OnlyProfile({ userToShow }) {
         data.append("bio", bio);
         data.append("headerImg", headerInputFile);
         data.append("profileImg", profileInputFile);
+        if(userToShow.headerpicture !==undefined && headerImg === null){
+            console.log("remove");
+            data.append("headerRemove",true);
+        }
+            
         setSaving(true);
         getToken(user.token)
             .then((token) => {
@@ -292,7 +297,6 @@ export default function OnlyProfile({ userToShow }) {
 
                     getCommentOfUser(userToShow.u_id, token)
                         .then((data) => {
-                            console.log(data);
                             setComment(data);
                         })
                         .catch((Err) => {
@@ -302,7 +306,6 @@ export default function OnlyProfile({ userToShow }) {
 
                     getAllLikedOfUser(userToShow.u_id, token)
                         .then((data) => {
-                            console.log(data);
                             setLikedTweet(data);
                         })
                         .catch((err) => {
@@ -345,11 +348,14 @@ export default function OnlyProfile({ userToShow }) {
                 {userToShow.headerpicture === null ? (
                     <div className={Styles.headerpicture} />
                 ) : (
-                    <img
-                        className={Styles.headerpicture}
-                        src={`http://localhost:4000/header/${userToShow.headerpicture}`}
-                        alt=""
-                    />
+                    // <img
+                    //     className={Styles.headerpicture}
+                    //     src={`http://localhost:4000/header/${userToShow.headerpicture}`}
+                    //     alt=""
+                    // />
+                    <div className={Styles.headerpicture} style={{background:`url(http://localhost:4000/header/${userToShow.headerpicture})`}}>
+
+                    </div>
                 )}
             </div>
             <div className={Styles.profileContent}>

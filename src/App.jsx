@@ -4,7 +4,6 @@ import {
     createRoutesFromElements,
     Route,
     RouterProvider,
-    useNavigate,
 } from "react-router-dom";
 import AuthContext from "./Context/AuthContext";
 import Navbar from "./Components/Navbar/index";
@@ -14,7 +13,6 @@ import SignupPopUp from "./Components/Signup";
 import "./App.css";
 import ModelOpen from "./Context/OpenModel";
 import { refreshApi } from "./Adapters/AuthApi";
-import TweetPopUpModel from "./Components/TweetPopUpModel";
 //twitter
 import twitterIcon from "/twitter.png";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -22,7 +20,9 @@ import { loadProfile, loadTweet } from "./Adapters/loaderApi";
 import Profile from "./Pages/Profile/Profile";
 import Tweet from "./Pages/TweetPage/Tweet";
 import getToken from "./Adapters/Token";
-
+import Notification from "./Pages/Notification/Notification";
+import Explore from "./Pages/Explore/Explore";
+import Message from "./Pages/Message/Message";
 function App() {
     //useState
     const [user, setUser] = useState({});
@@ -54,7 +54,6 @@ function App() {
     }
 
     function togleLoginSignUp() {
-        let loginStatus = login;
         if (login) {
             console.log(login);
             setLogin(false);
@@ -64,6 +63,8 @@ function App() {
             setReg(false);
         }
     }
+
+
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -85,6 +86,18 @@ function App() {
                             });
                     }}
                     element={<Profile />}
+                />
+                <Route 
+                    path="notifications"
+                    element = {<ProtectedRoute element={<Notification/>}/>}
+                />
+                <Route 
+                    path="explore"
+                    element ={<Explore/>}
+                />
+                <Route 
+                    path="message"
+                    element={<Message/>}
                 />
                 <Route
                     path="tweet/:t_id"
