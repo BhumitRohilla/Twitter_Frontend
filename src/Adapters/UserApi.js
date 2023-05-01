@@ -234,3 +234,24 @@ export function checkAllUserTweets(u_id){
         return data.result;
     })
 }
+
+export function updateUser(data,token){
+    return fetch(`http://localhost:4000/user/updateProfile`,{
+        method: 'POST',
+        headers:{
+            'Authorization': 'Bearer '+token
+        },
+        body:data
+    })
+    .then((res)=>{
+        if(res.status === 200){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((err)=>{
+        console.log(err);
+        return false;
+    })
+}

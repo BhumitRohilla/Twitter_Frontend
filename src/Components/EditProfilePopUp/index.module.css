@@ -1,0 +1,72 @@
+.sendBtn{
+    margin-left: auto;
+    font-size: 1rem;
+    padding: 2px 15px;
+    margin-right: 5px;
+}
+
+.headerDiv{
+    margin-top: 10px;
+    aspect-ratio: 16/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.mainBody{
+    width: 100%;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.noDisp{
+    display: none;
+}
+
+.profileDiv{
+    position: absolute;
+    top: -50%;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: rebeccapurple;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.profileHolder{
+    position: relative;
+    width: 20%;
+    aspect-ratio: 1/1;
+}
+
+.floatingBtn{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border: none;
+    background-color: gray;
+    border-radius: 50%;
+    opacity: 80%;
+}
+
+.floatingBtn:hover{
+    opacity: 100%;
+    background-color: rgb(75, 75, 75);
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.marginDiv{
+    margin: 10px;
+}

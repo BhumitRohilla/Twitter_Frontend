@@ -32,3 +32,29 @@ function checkIfValid(token){
         return  false;
     }
 }
+
+/*
+!Need AuthContext for working
+getToken(user.token)
+.then((token) => {
+    if (token.newToken !== undefined) {
+        let newUser = { ...user };
+        setUser({ user }, "OldUser");
+        newUser.token = token.newToken;
+        setUser({ ...newUser });
+        token = token.newToken;
+    } else {
+        token = token.oldToken;
+    }
+    console.log(token);
+
+    *YourFunction Here
+
+})
+.catch((err) => {
+    if (err.message == 401) {
+        setUser({});
+    }
+});
+*/
+

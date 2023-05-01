@@ -15,12 +15,17 @@ import {
     followUserApi,
     getFollowStatus,
     unFollowUserApi,
+    updateUser,
 } from "../../Adapters/UserApi";
 import ModelOpen from "../../Context/OpenModel";
 import Comment from "../Comment/index";
 import Steps from "./step1";
+import EditProfilePopUp from "../EditProfilePopUp";
+import { loadProfile } from "../../Adapters/loaderApi";
 
 export default function OnlyProfile({ userToShow }) {
+    //Context
+
     const [step, changeStep] = useState(1);
     const { user, setUser } = useContext(AuthContext);
     const { openLogin } = useContext(ModelOpen);
@@ -34,7 +39,95 @@ export default function OnlyProfile({ userToShow }) {
 
     const [following, changeFollowStatus] = useState(false);
 
-    const [followrs, setFollower] = useState(parseInt(userToShow.follows)); 
+    const [followrs, setFollower] = useState(parseInt(userToShow.follows));
+
+    //FOR EDITING Profile
+    const [editProfileStatus, setEditProfileStatus] = useState(false);
+    const [headerInputFile, setHeaderInputFile] = useState(null);
+    const [profileInputFile, setProfileInputFile] = useState(null);
+    const [headerImg, setHeaderImg] = useState(
+        userToShow.headerpicture
+            ? `http://localhost:4000/Header/${userToShow.headerpicture}`
+            : null
+    );
+    const [profileImg, setProfileImg] = useState(
+        userToShow.profilepicture
+            ? `http://localhost:4000/Profile/${userToShow.profilepicture}`
+            : `${defaultProfile}`
+    );
+    const [name, setName] = useState(userToShow.name);
+    const [bio, setBio] = useState(userToShow.bio);
+
+    function handleCloseForEditProfile() {
+        setEditProfileStatus(false);
+        setHeaderInputFile(null);
+        setProfileInputFile(null);
+        setHeaderImg(
+            userToShow.headerpicture
+                ? `http://localhost:4000/${userToShow.headerpicture}`
+                : null
+        );
+        setProfileImg(
+            userToShow.profilepicture
+                ? `http://localhost:4000/${userToShow.profilepicture}`
+                : `${defaultProfile}`
+        );
+        setName(userToShow.name);
+        setBio(userToShow.bio);
+    }
+
+    function handleSubmitEditProfile() {
+        console.log("Sending");
+        const data = new FormData();
+        data.append("name", name);
+        data.append("bio", bio);
+        data.append("headerImg", headerInputFile);
+        data.append("profileImg", profileInputFile);
+        getToken(user.token)
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+
+                updateUser(data, token)
+                    .then((res) => {
+                        // let newUser = {...user};
+                        // newUser.profilepicture = data.profilepicture;
+                        // newUser.headerpicture = data.headerpicture;
+                        // newUser.name = data.name;
+                        // newUser.bio = data.bio
+                        // setUser(newUser);
+                        if (res) {
+                            return loadProfile(userToShow.u_id);
+                        } else {
+                            alert("Server error occure");
+                        }
+                    })
+                    .then((data) => {
+                        let newUser = { ...user };
+                        newUser.profilepicture = data.profilepicture;
+                        newUser.headerpicture = data.headerpicture;
+                        newUser.name = data.name;
+                        newUser.bio = data.bio;
+                        userToShow.profilepicture = data.profilepicture;
+                        userToShow.headerpicture = data.headerpicture;
+                        userToShow.name = data.name;
+                        userToShow.bio = data.bio;
+                        setUser(newUser);
+                    });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
+    }
 
     useEffect(() => {
         getToken(user.token)
@@ -95,7 +188,7 @@ export default function OnlyProfile({ userToShow }) {
                     .then((result) => {
                         if (result === true) {
                             changeFollowStatus(true);
-                            setFollower(followrs+1);
+                            setFollower(followrs + 1);
                         } else {
                             //TODO:: remove alert;
                             alert("Sever error occure");
@@ -129,7 +222,7 @@ export default function OnlyProfile({ userToShow }) {
                     .then((result) => {
                         if (result === true) {
                             changeFollowStatus(false);
-                            setFollower(followrs-1);
+                            setFollower(followrs - 1);
                         } else {
                             alert("Sever error occure");
                         }
@@ -144,6 +237,12 @@ export default function OnlyProfile({ userToShow }) {
                 }
             });
     }
+
+    function openEditProfile() {
+        setEditProfileStatus(true);
+    }
+
+    function handleSubmit() {}
 
     useEffect(() => {
         setLoadingStatus(true);
@@ -279,7 +378,7 @@ export default function OnlyProfile({ userToShow }) {
                         )
                     ) : (
                         <Button
-                            onClick={() => openEditProfile()}
+                            onClick={openEditProfile}
                             className={`${Styles.btnProfile} ${Styles.editProfileBtn}`}
                         >
                             Edit Profile
@@ -291,15 +390,16 @@ export default function OnlyProfile({ userToShow }) {
                     <h4 className={Styles.usernamTitle}>
                         @{userToShow.username}
                     </h4>
+                    {userToShow.bio && (
+                        <p className={Styles.bio}>{userToShow.bio}</p>
+                    )}
                     <div></div>
                     <p className={Styles.followTitle}>
                         <span className={Styles.whiteText}>
                             {userToShow.following}
                         </span>{" "}
                         Following &nbsp; &nbsp;{" "}
-                        <span className={Styles.whiteText}>
-                            {followrs}
-                        </span>{" "}
+                        <span className={Styles.whiteText}>{followrs}</span>{" "}
                         Followers
                     </p>
                 </div>
@@ -365,6 +465,23 @@ export default function OnlyProfile({ userToShow }) {
                     }}
                 />
             </div>
+            <EditProfilePopUp
+                isOpen={editProfileStatus}
+                handleClose={handleCloseForEditProfile}
+                headerImg={headerImg}
+                setHeaderImg={setHeaderImg}
+                profileImg={profileImg}
+                setProfileImg={setProfileImg}
+                name={name}
+                setName={setName}
+                bio={bio}
+                setBio={setBio}
+                headerInputFile={headerInputFile}
+                profileInputFile={profileInputFile}
+                setHeaderInputFile={setHeaderInputFile}
+                setProfileInputFile={setProfileInputFile}
+                submit={handleSubmitEditProfile}
+            />
         </>
     );
 }

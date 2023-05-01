@@ -2,7 +2,7 @@ import React from "react";
 import Styles from './index.module.css'
 import CloseBtn from "../CloseBtn";
 
-export default function PopUp({isOpen,children,handleClose,footer,header}){
+export default function PopUp({isOpen,children,handleClose,footer,header,childClass}){
     
     function close(){
         handleClose();
@@ -21,7 +21,7 @@ export default function PopUp({isOpen,children,handleClose,footer,header}){
                         <button title="Close" className={Styles.close} onClick={close}><CloseBtn/></button>
                         {header}
                     </div>
-                    <div className={Styles.content}>
+                    <div className={`${Styles.content} `+childClass}>
                         {children}
                     </div>
                     <div className={Styles.footer}>
