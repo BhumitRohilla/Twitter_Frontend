@@ -57,7 +57,7 @@ export default function TweetModel(props) {
                 likedApi(props.tweet.t_id, token).then((res) => {
                     if (res) {
                         setLiked(!liked);
-                        props.handleLikePress(props.tweet.t_id, true);
+                        props.handleLikePress && props.handleLikePress(props.tweet.t_id, true);
                     } else {
                         //TODO: Remove alert;
                         alert("Server error occure");
@@ -87,7 +87,7 @@ export default function TweetModel(props) {
                 removeLikeApi(props.tweet.t_id, token).then((res) => {
                     if (res) {
                         setLiked(!liked);
-                        props.handleLikePress(props.tweet.t_id, null);
+                        props.handleLikePress && props.handleLikePress(props.tweet.t_id, null)
                     } else {
                         //TODO: Remove alert;
                         alert("Server error occure");

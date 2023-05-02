@@ -70,7 +70,8 @@ export default function SearchBar(props) {
     }
 
     function handleClosePopUp(){
-        setTimeout(()=>changeFocusStatus(false),2000);
+        setTimeout(()=>changeFocusStatus(false),100);
+        // changeFocusStatus(false);
     }
 
     return (

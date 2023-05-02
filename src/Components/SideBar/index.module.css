@@ -37,8 +37,8 @@
 }
 
 .logout{
+    
     margin-top: auto;
-    margin: 0px;
 } 
 
 
@@ -76,5 +76,8 @@
         justify-items: center;
         padding: 0px;
         align-items: center;
+    }
+    .logout{
+        margin: 0px;
     }
 }

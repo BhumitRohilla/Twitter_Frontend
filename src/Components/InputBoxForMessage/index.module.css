@@ -1,0 +1,53 @@
+.mainBody{
+    display: flex;
+    align-items: center;
+    background-color: #202327;
+    padding: 5px;
+    border-radius: 15px;
+    justify-content: center;
+    height: 44px;
+    box-sizing: border-box;
+}
+
+.btnContainer{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 10px;
+    position: relative;
+}
+
+.input{
+    background-color: #202327;
+    border: none;
+    width: 100%;
+    color:  white;
+}
+.input:focus{
+    border: transparent;
+    outline: transparent;
+}
+
+.sendBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svgCommon{
+    width: 20px;
+    height: fit-content;
+}
+
+.svgDisabled *{
+    stroke: #1e5f8c;
+}
+
+.svg *{
+    stroke: var(--blueColor);
+}
+
+.emojiPicker{
+    position: absolute;
+    bottom: 24px;
+}

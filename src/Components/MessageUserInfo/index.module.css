@@ -1,0 +1,22 @@
+.mainBody{
+    margin-top: 20px;
+    height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profile{
+    width: 64px;
+    aspect-ratio: 1/1;
+    background-color: rebeccapurple;
+    border-radius: 50%;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.grayText{
+    color: gray;
+}

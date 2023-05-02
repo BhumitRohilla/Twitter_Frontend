@@ -1,9 +1,22 @@
+.mainBody{
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 50px); 
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+
 .main{
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
+
 }
 
 .holder{
@@ -20,6 +33,8 @@
     font-size: 15px;
 }
 
+
+
 .FocusBtn{
     background-color: var(--blueColor);
     color:  white;
@@ -28,4 +43,35 @@
     height: 55px;
     width: 200px;
     border-radius: 40px;
+}
+
+
+.messageBox{
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+}
+
+.messageContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px 10px;
+    gap: 10px;
+    align-self: flex-end;
+    margin-top: auto;
+    padding-bottom: 30px;
+}
+
+
+.individualMessage{
+    padding: 20px;
+}
+
+
+@media only screen and (max-width:500px){
+    .mainBody{
+        height: calc(100% - 76px);
+    }
 }
