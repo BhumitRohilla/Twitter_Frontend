@@ -3,7 +3,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
 export default function MessageInput(props) {
-
+    
     function send(){
         if(props.message.trim()!==''){
             props.send();

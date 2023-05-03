@@ -13,7 +13,7 @@ export default function MessageDashboard(props) {
             <SearchBar inputRef={props.inputRef} onClick={onClick} />
             <div className={Styles.userContainer}>
                 {props.userToShow.map((element) => {
-                    return (<div onClick={onClick(element)}><h1>{element.name}</h1></div>)
+                    return (<div key={element.u_id} className={`${Styles.headding} ${(props.user && element.u_id===props.user.u_id)?Styles.active:Styles.inactive}`} onClick={onClick(element)}><h1>{element.name}</h1></div>)
                 })}
 
             </div>

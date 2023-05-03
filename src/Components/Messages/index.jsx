@@ -20,6 +20,15 @@ export default function Messages(props) {
         changeBtnState(true);
     }
 
+
+    useEffect(()=>{
+        if(props.message.trim()=== ''){
+            changeBtnState(false);
+        }else{
+            changeBtnState(true);
+        }
+    },[props.message])
+
     function handleOnChange(value) {
         changeShowEmoji(false);
         props.setMessage(value);
@@ -60,12 +69,15 @@ export default function Messages(props) {
                     </div>
                     <div className={Styles.messageContainer}>
                         {props.messageToDis &&
-                            props.messageToDis.map((element) => {
+                            props.messageToDis.map((element,index) => {
+                                let lastMessage = (props.messageToDis.length - index === 1)?true:false;
+                                console.log(lastMessage);
                                 return (
                                     <MessageBox
                                         className={Styles.individualMessage}
                                         currentUser={user.u_id}
                                         message={element}
+                                        lastRef={lastMessage?props.lastRef:null}
                                     />
                                 );
                             })}
@@ -76,10 +88,10 @@ export default function Messages(props) {
                     handleOnChange={handleOnChange}
                     className={Styles.messageBox}
                     addEmoji={addEmoji}
-                    btnActive={btnActive}
                     message={props.message}
                     changeShowEmoji={changeShowEmoji}
                     showEmoji={showEmoji}
+                    btnActive={btnActive}
                 />
             </>
         );

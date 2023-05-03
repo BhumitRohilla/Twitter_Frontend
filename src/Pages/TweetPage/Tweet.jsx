@@ -1,7 +1,7 @@
 import Twitter from "../GeneralPage/Twitter";
 import SearchBar from "../../Components/SearchBar";
 import FollowCompnenetForSideBar from "../../Components/FollowComponentForSideBar";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import LoadingDiv from "../../Components/Loading";
 import MainTweet from "./MainTweet";
@@ -11,6 +11,7 @@ import getToken from "../../Adapters/Token";
 import AuthContext from "../../Context/AuthContext";
 import TweetModel from "../../Components/TweetModel";
 import Comment from "../../Components/Comment";
+import BackButton from "../../Components/BackButton";
 
 export default function Tweets() {
     const tweetToShow = useLoaderData();
@@ -20,6 +21,8 @@ export default function Tweets() {
 
     const [commentModel, setCommentModel] = useState(false);
     const [tweetToComment, setTweetToComment] = useState(null);
+
+
 
     function handleCommentPress(tweet) {
         setCommentModel(true);
@@ -35,10 +38,9 @@ export default function Tweets() {
         console.log("comment pressed");
     }
 
-    function sidebarOnClick(element){
-        return ()=>navigate(`/profile/${element.u_id}`)
+    function sidebarOnClick(element) {
+        return () => navigate(`/profile/${element.u_id}`);
     }
-
 
     useEffect(() => {
         setLoading(true);
@@ -70,7 +72,10 @@ export default function Tweets() {
         <Twitter
             firstElement={
                 <>
-                    <h2>Tweet</h2>
+                    <h2 className={Styles.heading}>
+                        <BackButton/>
+                        Tweet
+                    </h2>
                     <MainTweet
                         className={Styles.mainTweet}
                         tweet={tweetToShow}
@@ -90,7 +95,6 @@ export default function Tweets() {
                                         handleCommentPress={handleCommentPress}
                                         handleRetweetPress={handleRetweetPress}
                                         className={Styles.tweets}
-                                        
                                     />
                                 );
                             })
@@ -110,7 +114,7 @@ export default function Tweets() {
             }
             secondElement={
                 <>
-                    <SearchBar onClick={sidebarOnClick}/>
+                    <SearchBar onClick={sidebarOnClick} />
                     <FollowCompnenetForSideBar key="FollowSideBar" />
                 </>
             }

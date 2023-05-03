@@ -1,7 +1,7 @@
 import Styles from "./message.module.css";
 import Messages from "../../Components/Messages/index";
 import MessageDashboard from "../../Components/MessageDashboard/index";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import AuthContext from "../../Context/AuthContext";
 import { useLoaderData } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useLoaderData } from "react-router-dom";
 //API
 import getToken from "../../Adapters/Token";
 import { getAllMessages, sendMessage } from "../../Adapters/messageApi";
+import LoadingDiv from "../../Components/Loading";
 export default function Message() {
     const { user, setUser } = useContext(AuthContext);
     const [message, setMessage] = useState("");
@@ -16,6 +17,12 @@ export default function Message() {
     const [messageToDis, setMessagesToDisp] = useState([]);
     const [userToOpen, setUserToOpen] = useState(null);
     const [userToShow, setUserToShow] = useState(useLoaderData());
+    const [loading, setLoading] = useState(false);
+    const lastRef = useCallback((node) => {
+        if (node) {
+            node.scrollIntoView({ smolth: true });
+        }
+    }, []);
     const [userSet, setUserSet] = useState(
         new Set(
             useLoaderData().map((element) => {
@@ -23,6 +30,7 @@ export default function Message() {
             })
         )
     );
+
     console.log(userSet);
     const inputRef = useRef(null);
     console.log(userToShow);
@@ -92,7 +100,9 @@ export default function Message() {
                                 if (userSet.has(userToOpen.u_id)) {
                                     let elementToPushUp = userToShow.filter(
                                         (element) => {
-                                            if (element.u_id === userToOpen.u_id) {
+                                            if (
+                                                element.u_id === userToOpen.u_id
+                                            ) {
                                                 return true;
                                             } else {
                                                 return false;
@@ -105,7 +115,9 @@ export default function Message() {
                                     );
                                     let newArray = userToShow.filter(
                                         (element) => {
-                                            if (element.u_id === userToOpen.u_id) {
+                                            if (
+                                                element.u_id === userToOpen.u_id
+                                            ) {
                                                 return false;
                                             } else {
                                                 return true;
@@ -153,6 +165,7 @@ export default function Message() {
     }, []);
 
     useEffect(() => {
+        setLoading(true);
         getToken(user.token)
             .then((token) => {
                 if (token.newToken !== undefined) {
@@ -167,12 +180,14 @@ export default function Message() {
 
                 getAllMessages(userToOpen.u_id, token).then((data) => {
                     setMessagesToDisp(data);
+                    setLoading(false);
                 });
             })
             .catch((err) => {
                 if (err.message == 401) {
                     setUser({});
                 }
+                setLoading(false);
             });
     }, [userToOpen]);
 
@@ -187,17 +202,21 @@ export default function Message() {
                     setUser={setUserToOpen}
                     inputRef={inputRef}
                     userToShow={userToShow}
+                    user={userToOpen}
                 />
             </div>
             <div className={Styles.container}>
-                <Messages
-                    message={message}
-                    setMessage={setMessage}
-                    user={userToOpen}
-                    setFoucs={setFoucs}
-                    send={send}
-                    messageToDis={messageToDis}
-                />
+                {!loading?(
+                    <Messages
+                        message={message}
+                        setMessage={setMessage}
+                        user={userToOpen}
+                        setFoucs={setFoucs}
+                        send={send}
+                        messageToDis={messageToDis}
+                        lastRef={lastRef}
+                    />
+                ): <LoadingDiv/>}
             </div>
         </div>
     );

@@ -7,3 +7,23 @@
     height: 100%;
     overflow-y: scroll;
 }
+
+.active{
+    color: var(--blueColor);
+    cursor: pointer;
+}
+.inactive{
+    color: rgb(184, 184, 184);
+    cursor: pointer;
+}
+.inactive:hover{
+    color: #81c1ec;
+}
+.inactive:active{
+    color: #0a4872;
+}
+
+.headding{
+    transition: all 0.1s linear;
+}
+

@@ -67,7 +67,7 @@ function App() {
         return (
             <div>
            <div>
-                <AuthContext.Provider value={{ user, setUser }}>
+                <AuthContext.Provider value={{user,setUser}}>
                     <ModelOpen.Provider
                         value={{ openLogin, openSignUp, togleLoginSignUp }}
                     >

@@ -67,6 +67,7 @@
     padding: 6px 17px;
     border-radius: 28px;
     overflow-wrap: anywhere;
+    max-width: 60%;
 }
 
 
