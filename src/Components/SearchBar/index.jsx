@@ -14,7 +14,7 @@ export default function SearchBar(props) {
     const [controller, changeController] = useState(new AbortController());
     const [loading, setLoading] = useState(true);
     
-
+    
     useEffect(() => {
         if (input.trim() !== "") {
             setLoading(true);
@@ -70,7 +70,7 @@ export default function SearchBar(props) {
     }
 
     function handleClosePopUp(){
-        setTimeout(()=>changeFocusStatus(false),100);
+        setTimeout(()=>changeFocusStatus(false),160);
         // changeFocusStatus(false);
     }
 

@@ -1,5 +1,13 @@
-.currentUser{
-    margin-left: auto;
+.other{
+    color: black;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 50px;
+    border-bottom-left-radius: 5px;
+}
+.self{
     background-color: var(--blueColor);
-    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+
 }

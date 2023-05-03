@@ -16,7 +16,7 @@ import { refreshApi } from "./Adapters/AuthApi";
 //twitter
 import twitterIcon from "/twitter.png";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import { loadProfile, loadTweet } from "./Adapters/loaderApi";
+import { loadProfile, loadTweet, userToShow } from "./Adapters/loaderApi";
 import Profile from "./Pages/Profile/Profile";
 import Tweet from "./Pages/TweetPage/Tweet";
 import getToken from "./Adapters/Token";
@@ -97,7 +97,35 @@ function App() {
                 />
                 <Route 
                     path="message"
-                    element={<Message/>}
+                    loader={()=>{
+                        return getToken(user.token)
+                            .then((token) => {
+                                if (token.newToken !== undefined) {
+                                    let newUser = { ...user };
+                                    setUser({ user }, "OldUser");
+                                    newUser.token = token.newToken;
+                                    setUser({ ...newUser });
+                                    token = token.newToken;
+                                } else {
+                                    token = token.oldToken;
+                                }
+                                return userToShow(token)
+                                    .then((data) => {
+                                        return data;
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                        return null;
+                                    });
+                            })
+                            .catch((err) => {
+                                if (err.message == 401) {
+                                    setUser({});
+                                }
+                                return null;
+                            });
+                    }}
+                    element={<ProtectedRoute element={<Message/>}/>}
                 />
                 <Route
                     path="tweet/:t_id"

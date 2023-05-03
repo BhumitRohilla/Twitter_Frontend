@@ -1,46 +1,180 @@
-import SideBar from "../../Components/SideBar";
-import Twitter from "../GeneralPage/Twitter";
 import Styles from "./message.module.css";
-
 import Messages from "../../Components/Messages/index";
 import MessageDashboard from "../../Components/MessageDashboard/index";
 import { useContext, useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import AuthContext from "../../Context/AuthContext";
+import { useLoaderData } from "react-router-dom";
 
+//API
+import getToken from "../../Adapters/Token";
+import { getAllMessages, sendMessage } from "../../Adapters/messageApi";
 export default function Message() {
     const { user, setUser } = useContext(AuthContext);
     const [message, setMessage] = useState("");
     const [socket, changeSocket] = useState();
-    
+    const [messageToDis, setMessagesToDisp] = useState([]);
     const [userToOpen, setUserToOpen] = useState(null);
+    const [userToShow, setUserToShow] = useState(useLoaderData());
+    const [userSet, setUserSet] = useState(
+        new Set(
+            useLoaderData().map((element) => {
+                return element.u_id;
+            })
+        )
+    );
+    console.log(userSet);
     const inputRef = useRef(null);
-
-    function send(){
-        if(socket==null){
+    console.log(userToShow);
+    if (socket) {
+        socket.on("recieve-message", (data) => {
+            console.log(data.sender);
+            if (userSet.has(data.sender)) {
+                let elementToPushUp = userToShow.filter((element) => {
+                    if (element.u_id === data.sender) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                console.log(elementToPushUp, "elementToPush");
+                let newArray = userToShow.filter((element) => {
+                    if (element.u_id === data.sender) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                console.log(newArray);
+                setUserToShow([...elementToPushUp, ...newArray]);
+            } else {
+                console.log(data);
+                userSet.add(data.sender);
+                setUserToShow([{ ...data.senderDetails }, ...userToShow]);
+            }
+            setMessagesToDisp([...messageToDis, data]);
+        });
+    }
+    async function send() {
+        if (socket == null) {
             alert("Some error occure reload page");
-        }else{
-            console.log(userToOpen,user.u_id);
+        } else {
+            console.log(userToOpen, user.u_id);
             setMessage("");
-            socket.emit('send-message',{message,receiver:userToOpen.u_id,sender:user.u_id})
+            getToken(user.token)
+                .then((token) => {
+                    if (token.newToken !== undefined) {
+                        let newUser = { ...user };
+                        setUser({ user }, "OldUser");
+                        newUser.token = token.newToken;
+                        setUser({ ...newUser });
+                        token = token.newToken;
+                    } else {
+                        token = token.oldToken;
+                    }
+                    sendMessage(userToOpen.u_id, message, token)
+                        .then((res) => {
+                            if (res) {
+                                let obj = {
+                                    message,
+                                    receiver: userToOpen.u_id,
+                                    sender: user.u_id,
+                                    convo_id: res.conv,
+                                    date: Date().toString(),
+                                    senderDetails: {
+                                        username: user.username,
+                                        profilepicture: user.profilepicture,
+                                        name: user.name,
+                                    },
+                                };
+                                setMessagesToDisp([...messageToDis, obj]);
+                                socket.emit("send-message", obj);
+                                if (userSet.has(userToOpen.u_id)) {
+                                    let elementToPushUp = userToShow.filter(
+                                        (element) => {
+                                            if (element.u_id === userToOpen.u_id) {
+                                                return true;
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    );
+                                    console.log(
+                                        elementToPushUp,
+                                        "elementToPush"
+                                    );
+                                    let newArray = userToShow.filter(
+                                        (element) => {
+                                            if (element.u_id === userToOpen.u_id) {
+                                                return false;
+                                            } else {
+                                                return true;
+                                            }
+                                        }
+                                    );
+                                    console.log(newArray);
+                                    setUserToShow([
+                                        ...elementToPushUp,
+                                        ...newArray,
+                                    ]);
+                                } else {
+                                    userSet.add(userToOpen.u_id);
+                                    setUserToShow([
+                                        { ...userToOpen },
+                                        ...userToShow,
+                                    ]);
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                })
+                .catch((err) => {
+                    if (err.message == 401) {
+                        setUser({});
+                    }
+                });
         }
     }
 
+    useEffect(() => {});
+
     useEffect(() => {
-        const socket = io('http://localhost:4000'); 
+        const socket = io("http://localhost:4000");
         socket.emit("add-user", user.u_id);
-        
-        socket.on("recieve-message", (data) => {
-            console.log(data);
-        });
+
         // socket.emit('send-message',{message:'test',receiver:1,sender:user.u_id})
         changeSocket(socket);
         return () => {
             socket.emit("disconnet", user.u_id);
             socket.close();
         };
-    },[]);
+    }, []);
 
+    useEffect(() => {
+        getToken(user.token)
+            .then((token) => {
+                if (token.newToken !== undefined) {
+                    let newUser = { ...user };
+                    setUser({ user }, "OldUser");
+                    newUser.token = token.newToken;
+                    setUser({ ...newUser });
+                    token = token.newToken;
+                } else {
+                    token = token.oldToken;
+                }
+
+                getAllMessages(userToOpen.u_id, token).then((data) => {
+                    setMessagesToDisp(data);
+                });
+            })
+            .catch((err) => {
+                if (err.message == 401) {
+                    setUser({});
+                }
+            });
+    }, [userToOpen]);
 
     function setFoucs() {
         inputRef.current.click();
@@ -49,7 +183,11 @@ export default function Message() {
     return (
         <div className={Styles.mainSection}>
             <div className={Styles.sideBar}>
-                <MessageDashboard setUser={setUserToOpen} inputRef={inputRef} />
+                <MessageDashboard
+                    setUser={setUserToOpen}
+                    inputRef={inputRef}
+                    userToShow={userToShow}
+                />
             </div>
             <div className={Styles.container}>
                 <Messages
@@ -58,6 +196,7 @@ export default function Message() {
                     user={userToOpen}
                     setFoucs={setFoucs}
                     send={send}
+                    messageToDis={messageToDis}
                 />
             </div>
         </div>

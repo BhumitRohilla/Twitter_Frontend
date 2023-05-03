@@ -1,5 +1,4 @@
 .mainBody{
-    position: relative;
     width: 100%;
     height: calc(100vh - 50px); 
     box-sizing: border-box;
@@ -47,8 +46,6 @@
 
 
 .messageBox{
-    position: fixed;
-    bottom: 10px;
     width: 100%;
 }
 
@@ -62,11 +59,14 @@
     align-self: flex-end;
     margin-top: auto;
     padding-bottom: 30px;
+    box-sizing: border-box;
 }
 
 
 .individualMessage{
-    padding: 20px;
+    padding: 6px 17px;
+    border-radius: 28px;
+    overflow-wrap: anywhere;
 }
 
 

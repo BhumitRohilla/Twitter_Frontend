@@ -18,6 +18,8 @@ export default function  Profile(){
         return ()=>navigate(`/profile/${element.u_id}`)
     }
 
+    console.warn(user);
+
     return (
         <Twitter
             firstElement={<OnlyProfile userToShow={data}/>}

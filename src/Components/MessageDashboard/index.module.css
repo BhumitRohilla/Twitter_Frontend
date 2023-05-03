@@ -2,3 +2,8 @@
     padding: 10px 10px;
     box-sizing: border-box;
 }
+
+.userContainer{
+    height: 100%;
+    overflow-y: scroll;
+}

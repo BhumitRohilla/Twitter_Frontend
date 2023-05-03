@@ -32,3 +32,21 @@ export  function loadTweet(t_id,token){
         return data.result;
     })
 }
+
+export function userToShow(token){
+    return fetch(`http://localhost:4000/message/userToConvo`,{
+        headers:{
+            'authorization' : 'Bearer '+token
+        }
+    })
+    .then((res)=>{
+        if(res.status===200){
+            return res.json();
+        }else{
+            throw new Error(res.status);
+        }
+    })
+    .then((data)=>{
+        return data.result;
+    })
+}

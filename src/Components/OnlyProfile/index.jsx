@@ -45,7 +45,7 @@ export default function OnlyProfile({ userToShow }) {
     const [editProfileStatus, setEditProfileStatus] = useState(false);
     const [headerInputFile, setHeaderInputFile] = useState(null);
     const [profileInputFile, setProfileInputFile] = useState(null);
-    const [saving,setSaving] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [headerImg, setHeaderImg] = useState(
         userToShow.headerpicture
             ? `http://localhost:4000/Header/${userToShow.headerpicture}`
@@ -84,11 +84,11 @@ export default function OnlyProfile({ userToShow }) {
         data.append("bio", bio);
         data.append("headerImg", headerInputFile);
         data.append("profileImg", profileInputFile);
-        if(userToShow.headerpicture !==undefined && headerImg === null){
+        if (userToShow.headerpicture !== undefined && headerImg === null) {
             console.log("remove");
-            data.append("headerRemove",true);
+            data.append("headerRemove", true);
         }
-            
+
         setSaving(true);
         getToken(user.token)
             .then((token) => {
@@ -139,6 +139,7 @@ export default function OnlyProfile({ userToShow }) {
     }
 
     useEffect(() => {
+        console.warn(userToShow,"user");
         getToken(user.token)
             .then((token) => {
                 if (token.newToken !== undefined) {
@@ -155,6 +156,8 @@ export default function OnlyProfile({ userToShow }) {
                     .then((res) => {
                         if (res === true) {
                             changeFollowStatus(true);
+                        }else{
+                            changeFollowStatus(false);
                         }
                     })
                     .catch((err) => {
@@ -254,6 +257,10 @@ export default function OnlyProfile({ userToShow }) {
     function handleSubmit() {}
 
     useEffect(() => {
+        // setFollower(userToShow.follow)
+
+        console.log(userToShow);
+
         setLoadingStatus(true);
         if (user.token === undefined) {
             checkAllUserTweets(userToShow.u_id)
@@ -353,9 +360,12 @@ export default function OnlyProfile({ userToShow }) {
                     //     src={`http://localhost:4000/header/${userToShow.headerpicture}`}
                     //     alt=""
                     // />
-                    <div className={Styles.headerpicture} style={{background:`url(http://localhost:4000/header/${userToShow.headerpicture})`}}>
-
-                    </div>
+                    <div
+                        className={Styles.headerpicture}
+                        style={{
+                            background: `url(http://localhost:4000/header/${userToShow.headerpicture})`,
+                        }}
+                    ></div>
                 )}
             </div>
             <div className={Styles.profileContent}>
@@ -440,6 +450,7 @@ export default function OnlyProfile({ userToShow }) {
                         loading={loading}
                         handleCommentPress={handleCommentPress}
                         handleRetweetPress={handleRetweetPress}
+                        className={Styles.tweet}
                     />
                 )}
                 {step === 2 && (
@@ -450,6 +461,7 @@ export default function OnlyProfile({ userToShow }) {
                             loading={loading}
                             handleCommentPress={handleCommentPress}
                             handleRetweetPress={handleRetweetPress}
+                            className={Styles.tweet}
                         />
                     </>
                 )}
@@ -461,6 +473,7 @@ export default function OnlyProfile({ userToShow }) {
                             loading={loading}
                             handleCommentPress={handleCommentPress}
                             handleRetweetPress={handleRetweetPress}
+                            className={Styles.tweet}
                         />
                     </>
                 )}
@@ -491,7 +504,7 @@ export default function OnlyProfile({ userToShow }) {
                 setHeaderInputFile={setHeaderInputFile}
                 setProfileInputFile={setProfileInputFile}
                 submit={handleSubmitEditProfile}
-                loading = {saving}
+                loading={saving}
             />
         </>
     );

@@ -10,7 +10,7 @@
     box-sizing: border-box;
     border-left : 1px solid var(--borderColor);
     border-right: 1px solid var(--borderColor);
-    flex: 1 1 600px;
+    flex: 1 0 600px;
     overflow-y: scroll;
     width: 100%;
 }
@@ -21,10 +21,13 @@
     box-sizing: border-box;
     height: 100vh;
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 
-@media only screen and (max-width: 700px) {
+
+@media only screen and (max-width: 974px) {
     .sideBar{
         display: none;
     }
