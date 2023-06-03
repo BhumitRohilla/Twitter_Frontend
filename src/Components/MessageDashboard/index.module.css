@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 .inactive:hover{
-    color: #81c1ec;
+    color: var(--blueHoverColor);
 }
 .inactive:active{
     color: #0a4872;

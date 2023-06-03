@@ -1,37 +1,22 @@
-import { useEffect, useState } from "react";
-
-import AuthContext from "./Context/AuthContext";
+import { useContext, useState } from "react";
+import AuthContext, { AuthProvider } from "./Context/AuthContext";
 import LoginPopUp from "./Components/LoginPopUp/index";
 import SignupPopUp from "./Components/Signup";
 import "./App.css";
 import ModelOpen from "./Context/OpenModel";
-import { refreshApi } from "./Adapters/AuthApi";
+
 //twitter
 import twitterIcon from "/twitter.png";
 
-
 import Router from "./Router";
 import { RouterProvider } from "react-router-dom";
+
+
 function App() {
-    //useState
-    const [user,setUser] = useState({});
     const [login, setLogin] = useState(false);
     const [register, setReg] = useState(false);
-    const [loading, setLoading] = useState(true);
-
+    const {user,loading} = useContext(AuthContext);
     //useEffect
-
-    useEffect(() => {
-        refreshApi()
-            .then((data) => {
-                setLoading(false);
-                setUser(data);
-            })
-            .catch((err) => {
-                setLoading(false);
-                console.log(err);
-            });
-    }, []);
 
     function openLogin() {
         setLogin(true);
@@ -54,6 +39,7 @@ function App() {
         }
     }
 
+    console.dir(AuthProvider);
 
     if (loading) {
         return (
@@ -66,8 +52,7 @@ function App() {
     } else {
         return (
             <div>
-           <div>
-                <AuthContext.Provider value={{user,setUser}}>
+                <div>
                     <ModelOpen.Provider
                         value={{ openLogin, openSignUp, togleLoginSignUp }}
                     >
@@ -83,10 +68,9 @@ function App() {
                                 setReg(false);
                             }}
                         />
-                        <RouterProvider router={Router(user,setUser)} />
+                        <RouterProvider router={Router(user)} />
                     </ModelOpen.Provider>
-                </AuthContext.Provider>
-            </div>
+                </div>
             </div>
         );
     }
