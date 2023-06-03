@@ -14,3 +14,8 @@ export function validEmail(email){
     const emailRejex = /^[a-zA-Z0-9]+@[a-z]+.com$/;
     return emailRejex.test(email);
 }
+
+export function checkHash(text){
+    const hashReject = /^[a-zA-Z0-9]+$/;
+    return hashReject.test(text);
+}

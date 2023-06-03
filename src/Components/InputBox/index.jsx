@@ -22,6 +22,7 @@ function Input({type,placeHolder,onChange,value,label,err,onClick}) {
     function checkForValue(){
         if(value === ''){
             pChangeStatus(true);
+            onChange('');
         }
     }
 

@@ -3,24 +3,23 @@ import PopUp from "../PopUp";
 import Styles from "./index.module.css";
 import Input from "../InputBox/index";
 import Button from "../Button";
-import { validUserName } from "../../Adapters/rejexFunciton";
 import { loginApi } from "../../Adapters/AuthApi";
 import AuthContext from "../../Context/AuthContext";
 import ModelOpen from "../../Context/OpenModel";
 import TwitterIcon from "../../assets/twitterIcon";
+import useUserName from "../../Hooks/userName";
+import usePassword from "../../Hooks/password";
+import { validUserName } from "../../Adapters/rejexFunciton";
 
 export default function index(props) {
-    const [userName, setUserName] = useState("");
-    const [password, setpassword] = useState("");
     const { setUser } = useContext(AuthContext);
     const { togleLoginSignUp } = useContext(ModelOpen);
+  
     const [errUser,setErrorUser] = useState('');
     const [errPassword,setErrorPassword] = useState('');
-
-    useEffect(()=>{
-        setErrorPassword('');
-        setErrorUser('');
-    },[])
+    
+    const [password, setpassword] = usePassword(setErrorPassword);
+    const [userName, setUserName] = useUserName(setErrorUser);
 
     function handleClose(){
         setUserName('');
@@ -29,25 +28,7 @@ export default function index(props) {
         setErrorPassword('');
         props.handleClose();
     }
-
-    useEffect(()=>{
-        if (validUserName(userName) && userName.trim() !== "") {
-            setErrorUser('');
-        } else {
-            //TODO: Remove this alertfunction
-            setErrorUser('Invalid UserName')
-        }
-    },[userName])
-
-    useEffect(()=>{
-            
-        if (password.trim() === "") {
-            setErrorPassword("Password cannot be empty");
-        }else{
-            setErrorPassword('');
-        }
-    },[password])
-
+    
     async function login() {
         if (validUserName(userName) && userName.trim() !== "") {
         } else {

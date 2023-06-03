@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import Twitter from "../GeneralPage/Twitter";
 import Styles from "./home.module.css";
 import Button from "../../Components/Button";
@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 const numberOfTweets = 100;
 
 export default function Home() {
+
     const { user, setUser } = useContext(AuthContext);
     const [tweet, changeTweet] = useState("");
     const [showEmoji, changeShowEmoji] = useState(false);
@@ -199,13 +200,18 @@ export default function Home() {
         changeImgFile(newImageArray);
     }
 
-    function addToInput(username) {
+    function addToInput(textToAdd,hash) {
         let newString = tweet.split([" "]);
         newString.pop();
-        newString.push(`@${username} `);
+        if(hash){
+            newString.push(`#${textToAdd} `)
+        }else{
+            newString.push(`@${textToAdd} `);
+        }
         newString = newString.join(" ");
         changeTweet(newString);
     }
+
 
     function firstElement() {
         return (
