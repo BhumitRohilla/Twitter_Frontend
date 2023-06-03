@@ -140,6 +140,7 @@ export default function OnlyProfile({ userToShow }) {
 
     useEffect(() => {
         console.warn(userToShow,"user");
+        changeStep(1);
         getToken(user.token)
             .then((token) => {
                 if (token.newToken !== undefined) {
