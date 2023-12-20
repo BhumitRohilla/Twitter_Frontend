@@ -1,6 +1,6 @@
 
 export function getAllMessages(receiver_id,token){
-    return fetch(`http://localhost:4000/message/getAllMessages`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/message/getAllMessages`,{
         method:'POST',
         credentials:'include',
         headers:{
@@ -22,7 +22,7 @@ export function getAllMessages(receiver_id,token){
 }
 
 export function sendMessage(receiver_id,message,token){
-    return fetch(`http://localhost:4000/message/sendMessage`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/message/sendMessage`,{
         method:'POST',
         credentials:'include',
         headers:{

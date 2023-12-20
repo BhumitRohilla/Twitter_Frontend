@@ -1,5 +1,5 @@
 export function commentSend(data,token){
-    return fetch('http://localhost:4000/tweet/sendComment',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/tweet/sendComment`,{
         method: 'POST',
         credentials: 'include',
         headers:{
@@ -25,7 +25,7 @@ export function commentSend(data,token){
 
 
 export function tweetSend(data,token){
-    return fetch('http://localhost:4000/tweet/send',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/tweet/send`,{
         method:'POST',
         headers:{
             'Authorization': 'Bearer '+token,
@@ -42,7 +42,7 @@ export function tweetSend(data,token){
 }
 
 export function getTweets(type,{start,length},token){
-    return fetch(`http://localhost:4000/tweet/show/${type}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/tweet/show/${type}`,{
         method: 'POST',
         headers:{
             'Authorization': 'Bearer ' + token,
@@ -63,7 +63,7 @@ export function getTweets(type,{start,length},token){
 }
 
 export function getCommentTweet(t_id,token){
-    return fetch(`http://localhost:4000/tweet/getCommentTweet/${t_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/tweet/getCommentTweet/${t_id}`,{
         headers:{
             'Authorization': 'Bearer ' + token,
         }

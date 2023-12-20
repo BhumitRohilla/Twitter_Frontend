@@ -1,5 +1,5 @@
 export  function checkIfUserExists(email){
-    return fetch('http://localhost:4000/auth/checkIfUserExists',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/checkIfUserExists`,{
         method:'POST',
         headers:{
             'Content-Type':'application/JSON'
@@ -24,7 +24,7 @@ export  function checkIfUserExists(email){
 }
 
 export  function generateAToken(email){
-    return fetch('http://localhost:4000/auth/sendValidationMail',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/sendValidationMail`,{
         method:'POST',
         credentials:'include',
         headers:{
@@ -47,7 +47,7 @@ export  function generateAToken(email){
 
 export  function checkCode(otp){
     console.log(otp);
-    return fetch('http://localhost:4000/auth/checkCode',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/checkCode`,{
         method:'POST',
         credentials:"include",
         headers:{
@@ -65,7 +65,7 @@ export  function checkCode(otp){
 }
 
 export function createAccount(payLoad){
-    return fetch('http://localhost:4000/auth/signUp',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/signUp`,{
         method: 'POST',
         credentials:'include',
         headers:{

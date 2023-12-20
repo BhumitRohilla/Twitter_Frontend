@@ -1,5 +1,5 @@
 export function getTweetsOfUser(u_id,token){
-    return fetch(`http://localhost:4000/user/getAllTweetsOfUser/${u_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/user/getAllTweetsOfUser/${u_id}`,{
         method:'GET',
         credentials:'include',
         headers:{
@@ -19,7 +19,7 @@ export function getTweetsOfUser(u_id,token){
 }
 
 export function getCommentOfUser(u_id,token){
-    return fetch(`http://localhost:4000/user/getAllCommentsOfUser/${u_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/user/getAllCommentsOfUser/${u_id}`,{
         method:'GET',
         credentials:'include',
         headers:{
@@ -39,7 +39,7 @@ export function getCommentOfUser(u_id,token){
 }
 
 export function getAllLikedOfUser(u_id,token){
-    return fetch(`http://localhost:4000/user/getAllLikedOfUser/${u_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/user/getAllLikedOfUser/${u_id}`,{
         method:'GET',
         credentials:'include',
         headers:{

@@ -1,5 +1,5 @@
 export function loadProfile(u_id){
-    return fetch(`http://localhost:4000/check/profile/${u_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/check/profile/${u_id}`,{
         method:'GET'
     })
     .then((res)=>{
@@ -15,7 +15,7 @@ export function loadProfile(u_id){
 }
 
 export  function loadTweet(t_id,token){
-    return fetch(`http://localhost:4000/tweet/getSingleTweet/${t_id}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/tweet/getSingleTweet/${t_id}`,{
         headers:{
             'authorization' : 'Bearer '+token
         }
@@ -34,7 +34,7 @@ export  function loadTweet(t_id,token){
 }
 
 export function userToShow(token){
-    return fetch(`http://localhost:4000/message/userToConvo`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/message/userToConvo`,{
         headers:{
             'authorization' : 'Bearer '+token
         }

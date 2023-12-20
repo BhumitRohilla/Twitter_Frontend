@@ -1,5 +1,5 @@
 export function searchUser(username,controller){
-    return fetch(`http://localhost:4000/check/searchUsers/${username}`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/check/searchUsers/${username}`,{
         signal:controller.signal
     })
     .then((res)=>{
@@ -15,7 +15,7 @@ export function searchUser(username,controller){
 }
 
 export function searchHash(hash){
-    return fetch(`http://localhost:4000/check/searchHash/${hash}`)
+    return fetch(`${process.env.VITE_BACKEND_URL}/check/searchHash/${hash}`)
     .then((res)=>{
         if(res.status === 200){
             return res.json();

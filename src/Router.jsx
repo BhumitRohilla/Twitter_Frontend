@@ -15,7 +15,8 @@ import getToken from "./Adapters/Token";
 import { loadProfile, loadTweet, userToShow } from "./Adapters/loaderApi";
 export default function Router(user) {
 
-    return createBrowserRouter(createRoutesFromElements(<Route path="/" element={<Navbar />}>
+    return createBrowserRouter(createRoutesFromElements(
+    <Route path="/" element={<Navbar />}>
         <Route
             path="home"
             element={<ProtectedRoute element={<Home />} />}
@@ -69,6 +70,7 @@ export default function Router(user) {
                         return null;
                     });
             }}
+            
             element={<ProtectedRoute element={<Message />} />}
         />
         <Route

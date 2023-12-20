@@ -179,6 +179,7 @@ export default function SignupPopUp(props){
                     password: ''
                 }
                 if(validEmail(action.email)){
+                    setError('Checking Availability');
                     checkIfUserExists(action.email)
                     .then((value)=>{
                         if(value){

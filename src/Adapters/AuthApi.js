@@ -1,9 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
-const domain = 'localhost';
-
 export function loginApi(username,password){
-    return fetch(`http://${domain}:4000/auth/login`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/login`,{
         method:'POST',
         credentials: 'include',
         headers:{
@@ -29,7 +27,7 @@ export function loginApi(username,password){
 }
 
 export function refreshApi(){
-    return fetch(`http://${domain}:4000/auth/refresh`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/refresh`,{
         method: 'POST',
         credentials: 'include'
     })
@@ -51,7 +49,7 @@ export function refreshApi(){
 }
 
 export function refreshTokenNew(){
-    return fetch(`http://${domain}:4000/auth/refresh`,{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/refresh`,{
         method: 'POST',
         credentials: 'include'
     })
@@ -68,7 +66,7 @@ export function refreshTokenNew(){
 }
 
 export function logoutApi(){
-    return fetch('http://localhost:4000/auth/logout',{
+    return fetch(`${process.env.VITE_BACKEND_URL}/auth/logout`,{
         method:'GET',
         credentials: 'include'
     })
