@@ -1,5 +1,5 @@
 export function changeProfile(data,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/profile`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/profile`,{
         method:'POST',
         credentials:'include',
         headers:{
@@ -20,7 +20,7 @@ export function changeProfile(data,token){
 }
 
 export function checkIfUsernameAvailable(data){
-    return fetch(`${process.env.VITE_BACKEND_URL}/check/username`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/check/username`,{
         method:'POST',
         headers:{
             'Content-Type'  :'application/JSON'
@@ -40,7 +40,7 @@ export function checkIfUsernameAvailable(data){
 }
 
 export function updateUsername(data,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/username`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/username`,{
         method: 'POST',
         credentials: 'include',
         headers:{
@@ -64,7 +64,7 @@ export function updateUsername(data,token){
 }
 
 export  function followUserApi(u_id,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/follow`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/follow`,{
         method: 'POST',
         credentials: 'include',
         headers:{
@@ -87,7 +87,7 @@ export  function followUserApi(u_id,token){
 }
 
 export  function unFollowUserApi(u_id,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/unfollow`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/unfollow`,{
         method: 'POST',
         credentials: 'include',
         headers:{
@@ -110,7 +110,7 @@ export  function unFollowUserApi(u_id,token){
 }
 
 export  function getListOfUser(){
-    return fetch(`${process.env.VITE_BACKEND_URL}/check/getListOfUsers`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/check/getListOfUsers`,{
         method: 'POST',
         headers:{
             'Content-Type': 'application/JSON',
@@ -126,7 +126,7 @@ export  function getListOfUser(){
 }
 
 export function getListOfUserToFollow(payLoad,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/userToFollow`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/userToFollow`,{
         method: 'POST',
         credentials: 'include',
         headers:{
@@ -145,7 +145,7 @@ export function getListOfUserToFollow(payLoad,token){
 }
 
 export function likedApi(t_id,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/liked/${t_id}`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/liked/${t_id}`,{
         method: 'GET',
         credentials: 'include',
         headers:{
@@ -166,7 +166,7 @@ export function likedApi(t_id,token){
 }
 
 export function removeLikeApi(t_id,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/removeLike/${t_id}`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/removeLike/${t_id}`,{
         method: 'GET',
         credentials: 'include',
         headers:{
@@ -188,7 +188,7 @@ export function removeLikeApi(t_id,token){
 }
 
 export function searchUsers(username,signal){
-    return fetch(`${process.env.VITE_BACKEND_URL}/check/searchUsers/${username}`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/check/searchUsers/${username}`,{
         signal:signal
     })
     .then((res)=>{
@@ -204,7 +204,7 @@ export function searchUsers(username,signal){
 }
 
 export function getFollowStatus(userToCheck,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/checkFollowStatus/${userToCheck}`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/checkFollowStatus/${userToCheck}`,{
         headers:{
             'Authorization': 'Bearer '+token
         }
@@ -222,7 +222,7 @@ export function getFollowStatus(userToCheck,token){
 }
 
 export function checkAllUserTweets(u_id){
-    return fetch(`${process.env.VITE_BACKEND_URL}/check/getAllTweetsOfUser/${u_id}`)
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/check/getAllTweetsOfUser/${u_id}`)
     .then((res)=>{
         if(res.status === 200 ){
             return res.json();
@@ -236,7 +236,7 @@ export function checkAllUserTweets(u_id){
 }
 
 export function updateUser(data,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/updateProfile`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/updateProfile`,{
         method: 'POST',
         headers:{
             'Authorization': 'Bearer '+token
@@ -258,7 +258,7 @@ export function updateUser(data,token){
 
 
 export default function getNotification(token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/user/getNotifications`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/user/getNotifications`,{
         headers:{
             'Authorization': 'Bearer '+token
         },

@@ -1,5 +1,5 @@
 export  function checkIfUserExists(email){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/checkIfUserExists`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/checkIfUserExists`,{
         method:'POST',
         headers:{
             'Content-Type':'application/JSON'
@@ -24,7 +24,7 @@ export  function checkIfUserExists(email){
 }
 
 export  function generateAToken(email){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/sendValidationMail`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/sendValidationMail`,{
         method:'POST',
         credentials:'include',
         headers:{
@@ -47,7 +47,7 @@ export  function generateAToken(email){
 
 export  function checkCode(otp){
     console.log(otp);
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/checkCode`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/checkCode`,{
         method:'POST',
         credentials:"include",
         headers:{
@@ -65,7 +65,7 @@ export  function checkCode(otp){
 }
 
 export function createAccount(payLoad){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/signUp`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signUp`,{
         method: 'POST',
         credentials:'include',
         headers:{

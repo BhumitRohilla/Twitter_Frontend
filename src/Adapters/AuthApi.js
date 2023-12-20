@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 export function loginApi(username,password){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/login`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/login`,{
         method:'POST',
         credentials: 'include',
         headers:{
@@ -27,7 +27,7 @@ export function loginApi(username,password){
 }
 
 export function refreshApi(){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/refresh`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/refresh`,{
         method: 'POST',
         credentials: 'include'
     })
@@ -49,7 +49,7 @@ export function refreshApi(){
 }
 
 export function refreshTokenNew(){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/refresh`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/refresh`,{
         method: 'POST',
         credentials: 'include'
     })
@@ -66,7 +66,7 @@ export function refreshTokenNew(){
 }
 
 export function logoutApi(){
-    return fetch(`${process.env.VITE_BACKEND_URL}/auth/logout`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`,{
         method:'GET',
         credentials: 'include'
     })

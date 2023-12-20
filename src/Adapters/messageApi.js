@@ -1,6 +1,6 @@
 
 export function getAllMessages(receiver_id,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/message/getAllMessages`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/message/getAllMessages`,{
         method:'POST',
         credentials:'include',
         headers:{
@@ -22,7 +22,7 @@ export function getAllMessages(receiver_id,token){
 }
 
 export function sendMessage(receiver_id,message,token){
-    return fetch(`${process.env.VITE_BACKEND_URL}/message/sendMessage`,{
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/message/sendMessage`,{
         method:'POST',
         credentials:'include',
         headers:{
